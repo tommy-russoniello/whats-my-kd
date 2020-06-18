@@ -1,0 +1,149 @@
+html {
+	height: 100%;
+}
+
+body {
+	background-image: linear-gradient(#7790ff, #f4f6ff);
+
+	margin: 0;
+	padding: 0;
+
+	text-align: center;
+
+	font-family: 'Roboto', sans-serif;
+}
+
+a.plain-anchor:link {
+	text-decoration: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+a.plain-anchor:visited {
+	text-decoration: inherit;
+  color: inherit;
+  cursor: pointer;
+}
+
+.unselectable {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+#platform-icon {
+	height: 50px;
+	width: 50px;
+}
+
+#banner {
+	height: auto;
+	width: auto;
+
+	margin: 0;
+	padding: 0;
+
+	color: white;
+	background-color: #2a4966;
+
+	font-size: 50pt;
+}
+
+#message {
+	font-family: Arial;
+	font-size: 20pt;
+}
+
+#menu {
+	height: 15px;
+}
+.menu-buttons button {
+	border: none;
+	outline: none;
+	float: left;
+  background-color: Transparent;
+  cursor: pointer;
+}
+.menu-buttons button:hover {
+	border: none;
+  color: white;
+}
+
+#username {
+	width: 30%;
+	height: 30px;
+}
+#search {
+	margin-top: 25px;
+	outline: none;
+  background-color: Transparent;
+  border: none;
+  cursor: pointer;
+}
+#search:hover {
+	border: none;
+  color: white;
+}
+
+#loader {
+	margin-top: 25px;
+}
+
+.platform-selector input {
+  margin: 0;
+	padding: 0;
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  appearance: none;
+}
+.playstation-network {
+	background-image: url('images/psn.png');
+}
+.xbox-live {
+	background-image: url('images/xbl.png');
+}
+.activision {
+	background-image: url('images/atvi.png');
+}
+.battlenet {
+	background-image: url('images/battlenet.png');
+}
+
+.platform-selector input:active +.platform {
+	opacity: .9;
+}
+.platform-selector input:checked +.platform {
+  -webkit-filter: none;
+  -moz-filter: none;
+  filter: none;
+}
+.platform {
+	width: 50px;
+	height: 50px;
+
+	margin-top: 25px;
+	margin-left: 10px;
+	margin-right: 10px;
+
+  background-size:contain;
+  background-repeat:no-repeat;
+
+	cursor:pointer;
+
+  display:inline-block;
+
+  -webkit-transition: all 100ms ease-in;
+  -moz-transition: all 100ms ease-in;
+  transition: all 100ms ease-in;
+
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
+  -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
+  filter: brightness(1.8) grayscale(1) opacity(.7);
+}
+.platform:hover {
+  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
+  -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
+  filter: brightness(1.2) grayscale(.5) opacity(.9);
+}

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8" />
+		<title>What's My KD?</title>
+		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+		<link href="main.css" type="text/css" rel="stylesheet" />
+		<script src="main.js" type="text/javascript"></script>
+	</head>
+
+	<body>
+		<p id="banner"><a class="plain-anchor unselectable" href="index.html">What's my KD today?</a></p>
+		<div class="menu-buttons" id="menu">
+			<button id="back" alt="back"><i class="fa fa-arrow-circle-left fa-2x display"></i></button>
+			<button id="full-stats" alt="full stats"><i class="fa fa-external-link-square fa-2x display"></i></button>
+		</div>
+
+		<div class="content">
+			<div>
+				<input class="search" type="textbox" id="username" placeholder="Enter player name">
+				<button class="search" id="search" type="button"><i class="fa fa-search fa-lg search"></i></button>
+			</div>
+			<form class="search">
+				<div class="platform-selector">
+					<input id="playstation-network" type="radio" name="platform" value="psn" />
+		      <label class="platform playstation-network" for="playstation-network"></label>
+		      <input id="xbox-live" type="radio" name="platform" value="xbl" />
+		      <label class="platform xbox-live" for="xbox-live"></label>
+		      <input id="activision" type="radio" name="platform" value="atvi" />
+		      <label class="platform activision" for="activision"></label>
+					<input id="battlenet" type="radio" name="platform" value="battlenet" />
+		      <label class="platform battlenet" for="battlenet"></label>
+		    </div>
+			</form>
+			<p class="display" id="name"></p>
+			<img class="display" id="platform-icon">
+			<i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
+			<p class="display" id="message"></p>
+			<p class="display" id="comment"></p>
+			<p id="error"></p>
+		</div>
+	</body>
+</html>
