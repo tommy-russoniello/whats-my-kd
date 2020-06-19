@@ -54,6 +54,7 @@ a.plain-anchor:visited {
 }
 
 .text {
+	margin: 2vh;
 	color: #0e1924;
 	display: inline-block;
 	text-align: center;
@@ -180,13 +181,18 @@ a.plain-anchor:visited {
 	}
 
 	#username {
-		/* margin-top: 30vh; */
 		height: 50px;
 		width: 75%;
 		font-size: 20pt;
 	}
 
 	#content {
-		margin-top: 10vh;
+		margin-top: 5vh;
+	}
+}
+
+@media screen and (max-height: 500px) {
+	#footer {
+		display: none;
 	}
 }
