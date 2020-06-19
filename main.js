@@ -5,6 +5,8 @@ PROFILE_PATH = "v2/modern-warfare/standard/profile"
 FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
 
 window.onload = function() {
+	$("#footer").html(generateFooterMessage());
+
 	var kills;
 	var deaths;
 	var now;
@@ -58,6 +60,10 @@ window.onload = function() {
 		}
 	}
 
+	function generateFooterMessage() {
+		return FOOTER_MESSAGES[Math.floor(Math.random() * FOOTER_MESSAGES.length)]
+	}
+
 	function getData(next) {
 		$.getJSON(
 			`${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodeURI(player)}?type=mp&next=${next}`
@@ -68,6 +74,7 @@ window.onload = function() {
 
 	function process() {
 		$("#name").html(player);
+		$("#name").attr("href", `${FULL_STATS_URL_PREFIX}/${platform}/${player}/mp`);
 		kills = 0;
 		deaths = 0;
 		now = new Date();
@@ -135,10 +142,6 @@ window.onload = function() {
 		searchParams.set("platform", temp_platform);
 		window.location.search = searchParams.toString();
 		process();
-	});
-
-	$(document).on("click", "#full-stats", function() {
-		window.location = `${FULL_STATS_URL_PREFIX}/${platform}/${player}/mp`;
 	});
 
 	$(document).on("click", "#back", function() {

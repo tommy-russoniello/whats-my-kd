@@ -3,24 +3,21 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>What's My KD?</title>
+		<meta name="viewport" content="width=device-width, initial-scale=1">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<link href="main.css" type="text/css" rel="stylesheet" />
+		<script src="footer_messages.js" type="text/javascript"></script>
 		<script src="main.js" type="text/javascript"></script>
 	</head>
 
 	<body>
 		<p id="banner"><a class="plain-anchor unselectable" href="index.html">What's my KD today?</a></p>
-		<div class="menu-buttons" id="menu">
-			<button id="back" alt="back"><i class="fa fa-arrow-circle-left fa-2x display"></i></button>
-			<button id="full-stats" alt="full stats"><i class="fa fa-external-link-square fa-2x display"></i></button>
-		</div>
-
-		<div class="content">
+		<div id="content">
 			<div>
 				<input class="search" type="textbox" id="username" placeholder="Enter player name">
-				<button class="search" id="search" type="button"><i class="fa fa-search fa-lg search"></i></button>
+				<button class="search" alt="search" id="search" type="button"><i class="fa fa-search fa-lg search"></i></button>
 			</div>
 			<form class="search">
 				<div class="platform-selector">
@@ -34,12 +31,24 @@
 		      <label class="platform battlenet" for="battlenet"></label>
 		    </div>
 			</form>
-			<p class="display" id="name"></p>
-			<img class="display" id="platform-icon">
-			<i id="loader" class="fa fa-spinner fa-spin fa-3x fa-fw"></i>
-			<p class="display" id="message"></p>
-			<p class="display" id="comment"></p>
+			<div>
+				<p class="display text"><a id="name" class="plain-anchor"></a></p>
+			</div>
+			<div>
+				<img class="display" id="platform-icon">
+			</div>
+				<i id="loader" class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+			<div>
+				<p class="display" class="text" id="message"></p>
+			</div>
+			<div>
+				<p class="display" class="text" id="comment"></p>
+			</div>
 			<p id="error"></p>
+			<div class="back-button">
+				<button id="back" alt="back"><i class="fa fa-arrow-circle-left fa-5x display"></i></button>
+			</div>
 		</div>
+		<footer id="footer"></p>
 	</body>
 </html>
