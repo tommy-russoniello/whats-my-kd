@@ -1,4 +1,4 @@
-# whats-my-kd
+# What's my KD?
 
 Let's you see what your Kill:Death Ratio for _Call of Duty: Modern Warfare (2019)_ is so far today.
 
