@@ -45,15 +45,19 @@ window.onload = function() {
 		$(".display").show();
 		$("#message").html(`${kills} kills / ${deaths} deaths = ${ratio} KD`);
 
-		if(deaths > 1) {
+		if(deaths > 0 || kills > 0) {
 			if(ratio < 0.5) {
 				$("#comment").html("You suck, bruh.");
-			} else if (ratio < 0.9) {
+			} else if (ratio < 0.8) {
 				$("#comment").html("Ehhh...");
-			} else if (ratio < 1.1) {
+			} else if (ratio < 1) {
+				$("#comment").html("Not so hot.");
+			} else if (ratio < 1.15) {
 				$("#comment").html("Not too shabby.");
-			} else if (ratio < 1.75) {
+			} else if (ratio < 1.5) {
 				$("#comment").html("Noice.");
+			} else if (ratio < 2) {
+				$("#comment").html("Hey, that's pretty good.");
 			} else {
 				$("#comment").html("Damn, son.");
 			}
