@@ -7,9 +7,14 @@ FOOTER_MESSAGES = [
   "SBMM is good fun for the whole family",
   "50,000 people used to live here...",
   "riot shields are very skillful weapons",
-  "next update: ending music plays 3x",
+  "next update: ending music plays 3 times",
   "*in a forest* \"enemy at the tree!\"",
   "breaking: Activision eliminates racism with loading screen",
   "new operater unloc-BBBBVVBVVVVVNEFBJSABFJERBF",
-  "mom, I need doritos for double xp!"
+  "mom, I need doritos for double xp!",
+  "remember, no Russian",
+  "FLASHBANG THROUGH THE DOOR",
+  "Press F to pay respects",
+  "Praise the sun",
+  "cost of a single AC-130U Gunship: $190 million; cost of your mum: $0"
 ]

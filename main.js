@@ -130,6 +130,7 @@ window.onload = function() {
 
 	$(document).on("click", "#search", function() {
 		$("#error").hide();
+		$(".search").hide()
 		$("#loader").show();
 		var searchParams = new URLSearchParams();
 		var temp_id = $("#username").val()
