@@ -126,7 +126,12 @@ window.onload = function() {
 				$(".search").hide();
 				$("#platform-icon").attr("src", `images/${platform}.png`);
 				$("#name").html(data.data.platformInfo.platformUserHandle);
-				$("#avatar").attr("src", data.data.platformInfo.avatarUrl);
+				avatarUrl = data.data.platformInfo.avatarUrl
+				if(avatarUrl == null || avatarUrl == "") {
+					avatarUrl = "images/default_avatar.png"
+				}
+				$("#avatar").attr("src", avatarUrl);
+
 				getData("null");
 			})
 			.fail(function(data) {
