@@ -108,7 +108,13 @@ window.onload = function() {
 			`${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodeURI(player)}?type=mp&next=${next}`
 		)
 			.done(function(data) { setData(data); })
-			.fail(function(data) { displayError("Player not found"); });
+			.fail(function(data) {
+				if(data == null || data == "") {
+					displayError("The Tracker Network failed to respond.");
+				} else {
+					displayError("Player not found.");
+				}
+			});
 	}
 
 	function process() {
@@ -143,11 +149,19 @@ window.onload = function() {
 				getData("null");
 			})
 			.fail(function(data) {
-				displayError("Player not found");
+				if(data == null || data == "") {
+					displayError("The Tracker Network failed to respond.");
+				} else {
+					displayError("Player not found.");
+				}
 			});
 	}
 
 	function setData(data) {
+		if(!("data" in data) || !("matches" in data.data)) {
+			displayError("The Tracker Network failed to retrieve the data.");
+		}
+
 		matches = data.data.matches;
 		i = 0;
 		for(; i < matches.length; i++) {
@@ -209,7 +223,12 @@ window.onload = function() {
 		}
 		searchParams.set("platform", temp_platform);
 		window.location.search = searchParams.toString();
-		process();
+
+		try {
+			process();
+		} catch(error) {
+			displayError("An error occurred.");
+		}
 	});
 
 	$("#back").on("click", function() {
