@@ -1,9 +1,10 @@
-html {
+html, body {
+	margin: 0;
 	height: 100%;
 }
 
 body {
-	background-image: linear-gradient(#7790ff, #f4f6ff);
+	background: linear-gradient(180deg, #f0e8e1 0%, #e3dbd5 100%);
 
 	margin: 0;
 	padding: 0;
@@ -33,9 +34,37 @@ a.plain-anchor:visited {
   user-select: none;
 }
 
-#platform-icon {
+.box {
+  display: flex;
+  flex-flow: column;
+  height: 100%;
+}
+
+.box .row.header {
+  flex: 0 1 auto;
+}
+
+.box .row.content {
+  flex: 1 1 auto;
+}
+
+.box .row.footer {
+  flex: 0 1 40px;
+}
+
+#avatar {
 	height: 75px;
 	width: 75px;
+}
+
+#platform-icon {
+	height: 20px;
+	width: 20px;
+}
+
+#header {
+	background-color: #2a4966;
+	z-index: 1;
 }
 
 #banner {
@@ -43,43 +72,42 @@ a.plain-anchor:visited {
 	width: auto;
 
 	margin: 0;
-	margin-bottom: 20px;
+	margin-left: 30px;
 	padding: 0;
 	padding-bottom: 10px;
 
 	color: white;
-	background-color: #2a4966;
 
 	font-size: 50pt;
+
+	z-index: 1;
 }
 
 .text {
-	margin: 2vh;
+	margin: 1vh;
 	color: #0e1924;
 	display: inline-block;
 	text-align: center;
-	max-width: 80%;
+}
+#date {
+	font-size: 20pt;
 }
 #name {
-	font-size: 25pt;
+	font-size: 20pt;
 	text-align: center;
 	text-decoration: underline;
-	max-width: 80%;
 }
 #name:hover {
 	color: #1d334a;
 }
-#message {
-	font-size: 30pt;
+#kd {
+	font-size: 25pt;
+}
+#wl, #time-played {
+	font-size: 18pt;
 }
 #comment {
-	font-size: 20pt;
-}
-#footer {
-  position: absolute;
-  bottom: 0;
-  width: 100%;
-  height: 2.5rem;
+	font-size: 15pt;
 }
 
 .back-button button {
@@ -96,7 +124,7 @@ a.plain-anchor:visited {
 }
 
 #username {
-	margin-top: 25vh;
+	margin-top: 30vh;
 	width: 30%;
 	height: 30px;
 	font-size: 15pt;
@@ -173,10 +201,115 @@ a.plain-anchor:visited {
   filter: brightness(1.2) grayscale(.5) opacity(.9);
 }
 
+/* https://codepen.io/plavookac/pen/qomrMw */
+#sidebarMenu {
+  height: 100%;
+  position: fixed;
+  left: 0;
+  width: 250px;
+  transform: translateX(-250px);
+  transition: transform 250ms ease-in-out;
+  background: #2a4966;
+	z-index: 1;
+}
+.sidebarMenuInner {
+  margin:0;
+  padding:0;
+  border-top: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li {
+  list-style: none;
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  padding: 20px;
+  cursor: pointer;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.sidebarMenuInner li span {
+  display: block;
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.50);
+}
+.sidebarMenuInner li a {
+  color: #fff;
+  text-transform: uppercase;
+  font-weight: bold;
+  cursor: pointer;
+  text-decoration: none;
+}
+input[type="checkbox"]:checked ~ #sidebarMenu {
+  transform: translateX(0);
+}
+
+input[type=checkbox] {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  display: none;
+}
+.sidebarIconToggle {
+	margin-top: 10px;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  cursor: pointer;
+  position: absolute;
+  z-index: 99;
+  height: 100%;
+  width: 100%;
+  top: 22px;
+  left: 15px;
+  height: 22px;
+  width: 22px;
+}
+.spinner {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: absolute;
+  height: 3px;
+  width: 100%;
+  background-color: #fff;
+}
+.horizontal {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+.diagonal.part-1 {
+  position: relative;
+  transition: all 0.3s;
+  box-sizing: border-box;
+  float: left;
+}
+.diagonal.part-2 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  position: relative;
+  float: left;
+  margin-top: 3px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  opacity: 0;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(135deg);
+  margin-top: 8px;
+}
+input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+  transition: all 0.3s;
+  box-sizing: border-box;
+  transform: rotate(-135deg);
+  margin-top: -9px;
+}
+
 @media screen and (max-width: 1000px) {
 	#banner {
 		padding-top: 15px;
-		padding-bottom: 15px;
 		font-size: 25pt;
 	}
 
@@ -186,13 +319,27 @@ a.plain-anchor:visited {
 		font-size: 20pt;
 	}
 
-	#content {
-		margin-top: 5vh;
+	.sidebarIconToggle {
+		margin-top: 0;
+	}
+
+	#date, #name {
+		font-size: 15pt;
+	}
+	#kd {
+		font-size: 17pt;
+	}
+	#wl, #time-played {
+		font-size: 13pt;
+	}
+	#comment {
+		font-size: 12pt;
 	}
 }
 
-@media screen and (max-height: 500px) {
-	#footer {
-		display: none;
+@media screen and (max-width: 350px) {
+	#banner {
+		padding-top: 15px;
+		font-size: 20pt;
 	}
 }

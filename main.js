@@ -7,8 +7,11 @@ FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
 window.onload = function() {
 	$("#footer").html(generateFooterMessage());
 
-	var kills;
-	var deaths;
+	var wins = 0;
+	var losses = 0;
+	var kills = 0;
+	var deaths = 0;
+	var timePlayed = 0;
 	var now;
 	var start;
 
@@ -34,29 +37,55 @@ window.onload = function() {
 	}
 
 	function displayData() {
-		if (deaths == 0) {
-			var deaths_for_ratio = 1;
-		} else {
-			var deaths_for_ratio = deaths;
-		}
-
-		ratio = (kills / deaths_for_ratio).toPrecision(4);
 		$("#loader").hide();
 		$(".display").show();
-		$("#message").html(`${kills} kills / ${deaths} deaths = ${ratio} KD`);
+
+		if (deaths === 0) {
+			deaths_for_ratio = 1;
+		} else {
+			deaths_for_ratio = deaths;
+		}
+		kd_ratio = (kills / deaths_for_ratio).toPrecision(4);
+		$("#kd").html(`${kills} kills / ${deaths} deaths = ${kd_ratio} KD`);
+
+		if(losses === 0) {
+			losses_for_ratio = 1;
+		} else {
+			losses_for_ratio = losses;
+		}
+		wl_ratio = (wins / losses_for_ratio).toPrecision(4);
+		$("#wl").html(`${wins} wins / ${losses} losses = ${wl_ratio} WL`);
+
+    hours = Math.floor(timePlayed / (60 * 60));
+    minutes = Math.floor(timePlayed / 60 % 60);
+    seconds = timePlayed % 60;
+
+    hours_string = `${hours} hours`;
+		if(hours === 1) {
+			hours_string = hours_string.substring(0, hours_string.length - 1);
+		}
+		minutes_string = `${minutes} minutes`;
+		if(minutes === 1) {
+			minutes_string = minutes_string.substring(0, minutes_string.length - 1);
+		}
+		seconds_string = `${seconds} seconds`;
+		if(seconds === 1) {
+			seconds_string = seconds_string.substring(0, seconds_string.length - 1);
+		}
+		$("#time-played").html(`${hours_string}, ${minutes_string}, and ${seconds_string} played`);
 
 		if(deaths > 0 || kills > 0) {
-			if(ratio < 0.5) {
+			if(kd_ratio < 0.5) {
 				$("#comment").html("You suck, bruh.");
-			} else if (ratio < 0.8) {
+			} else if (kd_ratio < 0.8) {
 				$("#comment").html("Ehhh...");
-			} else if (ratio < 1) {
+			} else if (kd_ratio < 1) {
 				$("#comment").html("Not so hot.");
-			} else if (ratio < 1.15) {
+			} else if (kd_ratio < 1.15) {
 				$("#comment").html("Not too shabby.");
-			} else if (ratio < 1.5) {
+			} else if (kd_ratio < 1.5) {
 				$("#comment").html("Noice.");
-			} else if (ratio < 2) {
+			} else if (kd_ratio < 2) {
 				$("#comment").html("Hey, that's pretty good.");
 			} else {
 				$("#comment").html("Damn, son.");
@@ -90,11 +119,14 @@ window.onload = function() {
 			start.setHours(6);
 		}
 
+		$("#date").html(prettyDateString(start));
+
 		$.getJSON(`${CORS_PROXY_URL}/${API_URL}/${PROFILE_PATH}/${platform}/${encodeURI(player)}`)
 			.done(function(data) {
+				$(".search").hide();
 				$("#platform-icon").attr("src", `images/${platform}.png`);
-				$(".search").hide()
 				$("#name").html(data.data.platformInfo.platformUserHandle);
+				$("#avatar").attr("src", data.data.platformInfo.avatarUrl);
 				getData("null");
 			})
 			.fail(function(data) {
@@ -103,15 +135,23 @@ window.onload = function() {
 	}
 
 	function setData(data) {
-		var matches = data.data.matches;
-		var i = 0;
+		matches = data.data.matches;
+		i = 0;
 		for(; i < matches.length; i++) {
 			var matchData = matches[i];
 			if(new Date(matchData.metadata.timestamp) < start) break;
 
-			var stats = matchData.segments[0].stats;
+			if(matchData.segments[0].metadata.hasWon) {
+				wins += 1
+			} else {
+				losses += 1
+			}
+
+			stats = matchData.segments[0].stats;
 			kills += stats.kills.value;
 			deaths += stats.deaths.value;
+
+			timePlayed += stats.timePlayed.value;
 		}
 
 		if(i == matches.length) {
