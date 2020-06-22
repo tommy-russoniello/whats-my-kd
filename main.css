@@ -214,6 +214,9 @@ input:-webkit-autofill:active {
 .activision {
 	background-image: url('images/atvi.png');
 }
+.dark-mode .activision {
+	background-image: url('images/atvi_dark_mode.png');
+}
 .battlenet {
 	background-image: url('images/battlenet.png');
 }
