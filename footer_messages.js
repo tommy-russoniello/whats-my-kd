@@ -16,5 +16,7 @@ FOOTER_MESSAGES = [
   "FLASHBANG THROUGH THE DOOR",
   "Press F to pay respects",
   "Praise the sun",
-  "cost of a single AC-130U Gunship: $190 million; cost of your mum: $0"
+  "cost of a single AC-130U Gunship: $190 million; cost of your mum: $0",
+  "Hardscoping is actually just normal sniping",
+  "You know I had to do it to em"
 ]

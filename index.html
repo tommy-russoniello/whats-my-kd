@@ -11,6 +11,7 @@
 		<link rel="manifest" href="/site.webmanifest">
 		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
 		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
 		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 		<script src="date.js" type="text/javascript"></script>
 		<link href="main.css" type="text/css" rel="stylesheet" />
@@ -33,6 +34,15 @@
 			  <div id="sidebarMenu">
 			    <ul class="sidebarMenuInner">
 			      <li><a href="https://github.com/tommy-russoniello/whats-my-kd" target="_blank">Github Repo</a></li>
+						<li>
+							<p>Dark Mode</p>
+							<div class="dark-mode-toggle">
+								<label class="toggle-control">
+								  <input id="dark-mode-toggle" type="checkbox">
+								  <span class="control"></span>
+								</label>
+							</div>
+						</li>
 			    </ul>
 			  </div>
 			</div>
@@ -58,7 +68,9 @@
 					<p class="display text"><a id="name" class="plain-anchor text" target="_blank"></a></p>
 					<img class="display" id="platform-icon">
 				</div>
-				<div><img class="display" id="avatar"></div>
+				<div>
+					<a id="avatar-anchor" class="plain-anchor text" target="_blank"><img class="display" id="avatar"></a>
+				</div>
 				<i id="loader" class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
 				<div><p class="display text" id="time-played"></p></div>
 				<div><p class="display text" id="wl"></p></div>

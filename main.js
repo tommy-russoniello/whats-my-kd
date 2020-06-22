@@ -5,6 +5,12 @@ PROFILE_PATH = "v2/modern-warfare/standard/profile"
 FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
 
 window.onload = function() {
+	var darkMode = false;
+	if(Cookies.get("dark-mode") === "true") {
+		$("#dark-mode-toggle").attr("checked", "checked")
+		toggleDarkMode();
+	}
+
 	$("#footer").html(generateFooterMessage());
 
 	var wins = 0;
@@ -107,7 +113,9 @@ window.onload = function() {
 
 	function process() {
 		$("#name").html(player);
-		$("#name").attr("href", `${FULL_STATS_URL_PREFIX}/${platform}/${player}/mp`);
+		full_stats_url = `${FULL_STATS_URL_PREFIX}/${platform}/${player}/mp`
+		$("#name").attr("href", full_stats_url);
+		$("#avatar-anchor").attr("href", full_stats_url);
 		kills = 0;
 		deaths = 0;
 		now = new Date();
@@ -166,6 +174,16 @@ window.onload = function() {
 		}
 	}
 
+	function toggleDarkMode() {
+		if(darkMode) {
+			$("body").removeClass("dark-mode");
+		} else {
+			$("body").addClass("dark-mode");
+		}
+
+		darkMode = !darkMode;
+	}
+
 	$("#username").on("keyup", function() {
     if(event.key !== "Enter") return;
 
@@ -194,7 +212,17 @@ window.onload = function() {
 		process();
 	});
 
-	$(document).on("click", "#back", function() {
+	$("#back").on("click", function() {
 		window.location.search = "";
+	});
+
+	$("#dark-mode-toggle").on("click", function() {
+		if(darkMode) {
+			Cookies.remove("dark-mode");
+		} else {
+			Cookies.set("dark-mode", "true", { expires: 365 });
+		}
+
+		toggleDarkMode();
 	});
 }

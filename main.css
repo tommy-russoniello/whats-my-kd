@@ -3,6 +3,11 @@ html, body {
 	height: 100%;
 }
 
+.dark-mode {
+  background-color: black;
+  color: #e6e6e6;
+}
+
 body {
 	background: linear-gradient(180deg, #f0e8e1 0%, #e3dbd5 100%);
 
@@ -12,6 +17,9 @@ body {
 	text-align: center;
 
 	font-family: 'Roboto', sans-serif;
+}
+.dark-mode {
+	background: linear-gradient(180deg, #181818 0%, #121212 100%);
 }
 
 a.plain-anchor:link {
@@ -66,6 +74,9 @@ a.plain-anchor:visited {
 	background-color: #2a4966;
 	z-index: 1;
 }
+.dark-mode #header {
+	background-color: #2b2b2b;
+}
 
 #banner {
 	height: auto;
@@ -89,6 +100,9 @@ a.plain-anchor:visited {
 	display: inline-block;
 	text-align: center;
 }
+.dark-mode .text {
+	color: #e6e6e6;
+}
 #date {
 	font-size: 20pt;
 }
@@ -99,6 +113,9 @@ a.plain-anchor:visited {
 }
 #name:hover {
 	color: #1d334a;
+}
+.dark-mode #name:hover {
+	color: white;
 }
 #kd {
 	font-size: 25pt;
@@ -122,12 +139,24 @@ a.plain-anchor:visited {
 	border: none;
   color: #4273a1;
 }
+.dark-mode .back-button button {
+	color: #e6e6e6;
+}
+.dark-mode .back-button button:hover {
+  color: white;
+}
 
 #username {
+	border: 1px solid;
+	border-radius: 2px 0 0 2px;
+	border-color: #303030;
 	margin-top: 30vh;
 	width: 30%;
 	height: 30px;
 	font-size: 15pt;
+}
+.dark-mode #username {
+	background-color: #121212;
 }
 #search {
 	outline: none;
@@ -137,6 +166,12 @@ a.plain-anchor:visited {
 }
 #search:hover {
 	border: none;
+  color: white;
+}
+.dark-mode #search {
+	color: #e6e6e6;
+}
+.dark-mode #search:hover {
   color: white;
 }
 
@@ -163,6 +198,9 @@ a.plain-anchor:visited {
 .battlenet {
 	background-image: url('images/battlenet.png');
 }
+.dark-mode .battlenet {
+	background-image: url('images/battlenet_dark_mode.png');
+}
 
 .platform-selector input:active +.platform {
 	opacity: .9;
@@ -180,12 +218,12 @@ a.plain-anchor:visited {
 	margin-left: 10px;
 	margin-right: 10px;
 
-  background-size:contain;
-  background-repeat:no-repeat;
+  background-size: contain;
+  background-repeat: no-repeat;
 
-	cursor:pointer;
+	cursor: pointer;
 
-  display:inline-block;
+  display: inline-block;
 
   -webkit-transition: all 100ms ease-in;
   -moz-transition: all 100ms ease-in;
@@ -209,8 +247,11 @@ a.plain-anchor:visited {
   width: 250px;
   transform: translateX(-250px);
   transition: transform 250ms ease-in-out;
-  background: #2a4966;
+  background: #2c4d6b;
 	z-index: 1;
+}
+.dark-mode #sidebarMenu {
+	background: #2b2b2b;
 }
 .sidebarMenuInner {
   margin:0;
@@ -305,6 +346,64 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   box-sizing: border-box;
   transform: rotate(-135deg);
   margin-top: -9px;
+}
+
+.sidebarMenuInner p {
+	margin: 0;
+	display: inline-block;
+}
+
+/* https://codepen.io/garetmckinley/pen/YmxYZr */
+.toggle-control {
+  padding-left: 70px;
+  margin-bottom: 12px;
+  cursor: pointer;
+  font-size: 22px;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+	-ms-user-select: none;
+  user-select: none;
+}
+.toggle-control input {
+  position: absolute;
+  opacity: 0;
+  cursor: pointer;
+  height: 0;
+  width: 0;
+}
+.toggle-control input:checked ~ .control {
+  background-color: darkblue;
+}
+.toggle-control input:checked ~ .control:after {
+  left: 30px;
+}
+.toggle-control .control {
+	margin-left: 15px;
+  position: absolute;
+  top: 0;
+  left: 0;
+  height: 30px;
+  width: 60px;
+  border-radius: 17.5px;
+  background-color: darkgray;
+  -webkit-transition: background-color 0.15s ease-in;
+  transition: background-color 0.15s ease-in;
+}
+.toggle-control .control:after {
+  content: "";
+  position: absolute;
+  left: 6px;
+  top: 4px;
+  width: 22px;
+  height: 22px;
+  border-radius: 17.5px;
+  background: white;
+  -webkit-transition: left 0.15s ease-in;
+  transition: left 0.15s ease-in;
+}
+.dark-mode-toggle {
+	position: relative;
+	display: inline-block;
 }
 
 @media screen and (max-width: 1000px) {
