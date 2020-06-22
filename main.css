@@ -22,6 +22,10 @@ body {
 	background: linear-gradient(180deg, #181818 0%, #121212 100%);
 }
 
+*:focus {
+    outline: none;
+}
+
 a.plain-anchor:link {
 	text-decoration: inherit;
   color: inherit;
@@ -146,6 +150,21 @@ a.plain-anchor:visited {
   color: white;
 }
 
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px white inset !important;
+}
+.dark-mode input:-webkit-autofill,
+.dark-mode input:-webkit-autofill:hover,
+.dark-mode input:-webkit-autofill:focus,
+.dark-mode input:-webkit-autofill:active {
+  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+}
+.dark-mode input:-webkit-autofill {
+  -webkit-text-fill-color: #e6e6e6 !important;
+}
 #username {
 	border: 1px solid;
 	border-radius: 2px 0 0 2px;
@@ -372,7 +391,7 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   width: 0;
 }
 .toggle-control input:checked ~ .control {
-  background-color: darkblue;
+  background-color: #20C20E;
 }
 .toggle-control input:checked ~ .control:after {
   left: 30px;
