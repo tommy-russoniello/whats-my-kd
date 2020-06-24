@@ -4,12 +4,18 @@ MATCHES_PATH = "v1/modern-warfare/matches"
 PROFILE_PATH = "v2/modern-warfare/standard/profile"
 FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
 
+var darkMode = false;
+
+window.addEventListener('DOMContentLoaded', function() {
+  if(Cookies.get("dark-mode") === "true") {
+    window.toggleDarkMode();
+  }
+});
+
 window.onload = function() {
-	var darkMode = false;
-	if(Cookies.get("dark-mode") === "true") {
-		$("#dark-mode-toggle").attr("checked", "checked")
-		toggleDarkMode();
-	}
+  if(darkMode) {
+    $("#dark-mode-toggle").attr("checked", "checked");
+  }
 
 	$("#footer").html(generateFooterMessage());
 
@@ -188,16 +194,6 @@ window.onload = function() {
 		}
 	}
 
-	function toggleDarkMode() {
-		if(darkMode) {
-			$("body").removeClass("dark-mode");
-		} else {
-			$("body").addClass("dark-mode");
-		}
-
-		darkMode = !darkMode;
-	}
-
 	$("#username").on("keyup", function() {
     if(event.key !== "Enter") return;
 
@@ -242,6 +238,16 @@ window.onload = function() {
 			Cookies.set("dark-mode", "true", { expires: 365 });
 		}
 
-		toggleDarkMode();
+		window.toggleDarkMode();
 	});
+}
+
+function toggleDarkMode() {
+	if(darkMode) {
+		$("body").removeClass("dark-mode");
+	} else {
+		$("body").addClass("dark-mode");
+	}
+
+	darkMode = !darkMode;
 }
