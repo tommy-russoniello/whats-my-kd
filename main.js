@@ -30,9 +30,6 @@ window.onload = function() {
 	var urlParams = new URLSearchParams(window.location.search);
 	var player = urlParams.get("id");
 	var platform = urlParams.get("platform");
-	$(".search").hide();
-	$(".display").hide();
-	$("#error").hide();
 	if(player && platform) {
 		process();
 	} else {
