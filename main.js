@@ -151,9 +151,11 @@ window.onload = function() {
 
 				getData("null");
 			})
-			.fail(function(data) {
+			.fail(function(data, status, xhr) {
 				if(data == null || data == "") {
 					displayError("The Tracker Network failed to respond.");
+        } else if(xhr == "Unavailable For Legal Reasons") {
+          displayError("Player profile is private.");
 				} else {
 					displayError("Player not found.");
 				}
