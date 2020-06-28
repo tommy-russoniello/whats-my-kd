@@ -29,6 +29,7 @@ window.onload = function() {
 
 	var urlParams = new URLSearchParams(window.location.search);
 	var player = urlParams.get("id");
+  var encodedPlayer = encodeURIComponent(player);
 	var platform = urlParams.get("platform");
 	if(player && platform) {
 		process();
@@ -108,7 +109,7 @@ window.onload = function() {
 
 	function getData(next) {
 		$.getJSON(
-			`${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodeURI(player)}?type=mp&next=${next}`
+			`${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodedPlayer}?type=mp&next=${next}`
 		)
 			.done(function(data) { setData(data); })
 			.fail(function(data) {
@@ -122,7 +123,7 @@ window.onload = function() {
 
 	function process() {
 		$("#name").html(player);
-		full_stats_url = `${FULL_STATS_URL_PREFIX}/${platform}/${player}/mp`
+		full_stats_url = `${FULL_STATS_URL_PREFIX}/${platform}/${encodedPlayer}/mp`
 		$("#name").attr("href", full_stats_url);
 		$("#avatar-anchor").attr("href", full_stats_url);
 		kills = 0;
@@ -137,8 +138,9 @@ window.onload = function() {
 		}
 
 		$("#date").html(prettyDateString(start));
-
-		$.getJSON(`${CORS_PROXY_URL}/${API_URL}/${PROFILE_PATH}/${platform}/${encodeURI(player)}`)
+		$.getJSON(
+      `${CORS_PROXY_URL}/${API_URL}/${PROFILE_PATH}/${platform}/${encodedPlayer}`
+    )
 			.done(function(data) {
 				$(".search").hide();
 				$("#platform-icon").attr("src", `images/${platform}.png`);
