@@ -72,6 +72,15 @@ a.plain-anchor:visited {
   flex: 0 1 40px;
 }
 
+.content {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+#content-wrapper {
+  width: 100%;
+}
+
 .search, .display, #error {
 	display: none;
 }
@@ -187,7 +196,6 @@ input:-webkit-autofill:active {
 	border: 1px solid;
 	border-radius: 2px 0 0 2px;
 	border-color: #303030;
-	margin-top: 30vh;
 	width: 30%;
 	height: 30px;
 	font-size: 15pt;
@@ -212,11 +220,8 @@ input:-webkit-autofill:active {
   color: white;
 }
 
-#loader {
-	margin-top: 25vh;
-}
-
 .platform-selector input {
+  display: none;
   margin: 0;
 	padding: 0;
   -webkit-appearance: none;
@@ -481,7 +486,6 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 
 @media screen and (max-width: 500px) {
 	#username {
-		margin-top: 20vh;
 		height: 30px;
 		font-size: 20pt;
 	}
@@ -535,6 +539,9 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 	.sidebarIconToggle {
 		margin-top: -5px;
 	}
+  #username {
+    font-size: 10pt;
+  }
 	.platform {
 		width: 20px;
 		height: 20px;
