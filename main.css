@@ -1,3 +1,10 @@
+:root {
+  --dark-mode-color: #121212;
+  --dark-mode-color-alt: #2b2b2b;
+  --default-color: #e6e6e6;
+  --default-color-alt: #2a4966;
+}
+
 html, body {
 	margin: 0;
 	height: 100%;
@@ -6,7 +13,7 @@ html, body {
 
 .dark-mode {
   background-color: black;
-  color: #e6e6e6;
+  color: var(--default-color);
 }
 
 body {
@@ -20,7 +27,7 @@ body {
 	font-family: 'Roboto', sans-serif;
 }
 .dark-mode {
-	background: linear-gradient(180deg, #181818 0%, #121212 100%);
+	background: linear-gradient(180deg, #181818 0%, var(--dark-mode-color) 100%);
 }
 
 *:focus {
@@ -80,11 +87,11 @@ a.plain-anchor:visited {
 }
 
 #header {
-	background-color: #2a4966;
+	background-color: var(--default-color-alt);
 	z-index: 1;
 }
 .dark-mode #header {
-	background-color: #2b2b2b;
+	background-color: var(--dark-mode-color-alt);
 }
 
 #banner {
@@ -110,7 +117,7 @@ a.plain-anchor:visited {
 	text-align: center;
 }
 .dark-mode .text {
-	color: #e6e6e6;
+	color: var(--default-color);
 }
 #date {
 	font-size: 20pt;
@@ -138,7 +145,7 @@ a.plain-anchor:visited {
 
 .back-button button {
 	display: inline;
-	color: #2a4966;
+	color: var(--default-color-alt);
 	border: none;
 	outline: none;
   background-color: Transparent;
@@ -149,7 +156,7 @@ a.plain-anchor:visited {
   color: #4273a1;
 }
 .dark-mode .back-button button {
-	color: #e6e6e6;
+	color: var(--default-color);
 }
 .dark-mode .back-button button:hover {
   color: white;
@@ -165,16 +172,16 @@ input:-webkit-autofill:active {
   -webkit-box-shadow: 0 0 0 30px white inset !important;
 }
 .dark-mode input {
-	color: #e6e6e6;
+	color: var(--default-color);
 }
 .dark-mode input:-webkit-autofill,
 .dark-mode input:-webkit-autofill:hover,
 .dark-mode input:-webkit-autofill:focus,
 .dark-mode input:-webkit-autofill:active {
-  -webkit-box-shadow: 0 0 0 30px #121212 inset !important;
+  -webkit-box-shadow: 0 0 0 30px var(--dark-mode-color) inset !important;
 }
 .dark-mode input:-webkit-autofill {
-  -webkit-text-fill-color: #e6e6e6 !important;
+  -webkit-text-fill-color: var(--default-color) !important;
 }
 #username {
 	border: 1px solid;
@@ -186,7 +193,7 @@ input:-webkit-autofill:active {
 	font-size: 15pt;
 }
 .dark-mode #username {
-	background-color: #121212;
+	background-color: var(--dark-mode-color);
 }
 #search {
 	outline: none;
@@ -199,7 +206,7 @@ input:-webkit-autofill:active {
   color: white;
 }
 .dark-mode #search {
-	color: #e6e6e6;
+	color: var(--default-color);
 }
 .dark-mode #search:hover {
   color: white;
@@ -278,7 +285,7 @@ input:-webkit-autofill:active {
 	z-index: 1;
 }
 .dark-mode #sidebarMenu {
-	background: #2b2b2b;
+	background: var(--dark-mode-color-alt);
 }
 .sidebarMenuInner {
   margin: 0;
@@ -438,6 +445,12 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 }
 
 @media screen and (max-width: 1000px) {
+  #username {
+    width: 75%;
+  }
+}
+
+@media screen and (max-width: 1000px), screen and (max-height: 350px) {
 	#banner {
 		padding-top: 15px;
 		font-size: 25pt;
@@ -445,7 +458,6 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 
 	#username {
 		height: 50px;
-		width: 75%;
 		font-size: 20pt;
 	}
 
@@ -487,7 +499,7 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
 	}
 }
 
-@media screen and (max-width: 350px) {
+@media screen and (max-width: 350px), screen and (max-height: 350px) {
 	#banner {
 		padding-top: 15px;
 		font-size: 20pt;
