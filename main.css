@@ -225,14 +225,8 @@ input:-webkit-autofill:active {
 .activision {
 	background-image: url('images/atvi.png');
 }
-.dark-mode .activision {
-	background-image: url('images/atvi_dark_mode.png');
-}
 .battlenet {
 	background-image: url('images/battlenet.png');
-}
-.dark-mode .battlenet {
-	background-image: url('images/battlenet_dark_mode.png');
 }
 
 .platform-selector input:active +.platform {
@@ -262,14 +256,14 @@ input:-webkit-autofill:active {
   -moz-transition: all 100ms ease-in;
   transition: all 100ms ease-in;
 
-  -webkit-filter: brightness(1.8) grayscale(1) opacity(.7);
-  -moz-filter: brightness(1.8) grayscale(1) opacity(.7);
-  filter: brightness(1.8) grayscale(1) opacity(.7);
+  -webkit-filter: brightness(1.8) grayscale(1) opacity(.85);
+  -moz-filter: brightness(1.8) grayscale(1) opacity(.85);
+  filter: brightness(1.8) grayscale(1) opacity(.85);
 }
 .platform:hover {
-  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.9);
-  -moz-filter: brightness(1.2) grayscale(.5) opacity(.9);
-  filter: brightness(1.2) grayscale(.5) opacity(.9);
+  -webkit-filter: brightness(1.2) grayscale(.5) opacity(.95);
+  -moz-filter: brightness(1.2) grayscale(.5) opacity(.95);
+  filter: brightness(1.2) grayscale(.5) opacity(.95);
 }
 
 /* https://codepen.io/plavookac/pen/qomrMw */
