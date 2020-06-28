@@ -56,7 +56,9 @@ window.onload = function() {
 			deaths_for_ratio = deaths;
 		}
 		kd_ratio = (kills / deaths_for_ratio).toPrecision(4);
-		$("#kd").html(`${kills} kills / ${deaths} deaths = ${kd_ratio} KD`);
+    kills_string = pluralityString(kills, 'kill', 'kills');
+    deaths_string = pluralityString(deaths, 'death', 'deaths');
+		$("#kd").html(`${kills_string} / ${deaths_string} = ${kd_ratio} KD`);
 
 		if(losses === 0) {
 			losses_for_ratio = 1;
@@ -64,24 +66,17 @@ window.onload = function() {
 			losses_for_ratio = losses;
 		}
 		wl_ratio = (wins / losses_for_ratio).toPrecision(4);
-		$("#wl").html(`${wins} wins / ${losses} losses = ${wl_ratio} WL`);
+    wins_string = pluralityString(wins, 'win', 'wins');
+    losses_string = pluralityString(losses, 'loss', 'losses');
+		$("#wl").html(`${wins_string} / ${losses_string} = ${wl_ratio} WL`);
 
     hours = Math.floor(timePlayed / (60 * 60));
     minutes = Math.floor(timePlayed / 60 % 60);
     seconds = timePlayed % 60;
 
-    hours_string = `${hours} hours`;
-		if(hours === 1) {
-			hours_string = hours_string.substring(0, hours_string.length - 1);
-		}
-		minutes_string = `${minutes} minutes`;
-		if(minutes === 1) {
-			minutes_string = minutes_string.substring(0, minutes_string.length - 1);
-		}
-		seconds_string = `${seconds} seconds`;
-		if(seconds === 1) {
-			seconds_string = seconds_string.substring(0, seconds_string.length - 1);
-		}
+    hours_string = pluralityString(hours, 'hour', 'hours');
+		minutes_string = pluralityString(minutes, 'minute', 'minutes');
+		seconds_string = pluralityString(seconds, 'second', 'seconds');
 		$("#time-played").html(`${hours_string}, ${minutes_string}, and ${seconds_string} played`);
 
 		if(deaths > 0 || kills > 0) {
@@ -120,6 +115,17 @@ window.onload = function() {
 				}
 			});
 	}
+
+  function pluralityString(number, singularWord, pluralWord) {
+    string = `${number} `;
+		if(number === 1) {
+			string += singularWord;
+		} else {
+      string += pluralWord;
+    }
+
+    return string;
+  }
 
 	function process() {
 		$("#name").html(player);
