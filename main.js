@@ -81,10 +81,10 @@ window.onload = function() {
 
 		if(deaths > 0 || kills > 0) {
 			if(kd_ratio < 0.5) {
-				$("#comment").html("You suck, bruh.");
+				$("#comment").html("You kinda suck today, bruh.");
 			} else if (kd_ratio < 0.8) {
 				$("#comment").html("Ehhh...");
-			} else if (kd_ratio < 1) {
+			} else if (kd_ratio < 0.95) {
 				$("#comment").html("Not so hot.");
 			} else if (kd_ratio < 1.15) {
 				$("#comment").html("Not too shabby.");
@@ -92,8 +92,10 @@ window.onload = function() {
 				$("#comment").html("Noice.");
 			} else if (kd_ratio < 2) {
 				$("#comment").html("Hey, that's pretty good.");
+      } else if (kd_ratio < 3) {
+        $("#comment").html("Damn, son.");
 			} else {
-				$("#comment").html("Damn, son.");
+				$("#comment").html("You're cracked, bro");
 			}
 		}
 	}
@@ -165,7 +167,7 @@ window.onload = function() {
         } else if(xhr == "Unavailable For Legal Reasons") {
           displayError("Player profile is private.");
 				} else {
-					displayError("Player not found.");
+					displayError("Player not found: profile is private or name is incorrect.");
 				}
 			});
 	}
@@ -218,12 +220,19 @@ window.onload = function() {
 			displayError("Enter a username.");
 			return;
 		}
+
 		searchParams.set("id", temp_id);
 		var temp_platform = $("input[name=platform]:checked").val()
 		if(temp_platform == null || temp_platform == "") {
 			displayError("Select a platform.");
 			return;
 		}
+
+    if(temp_platform == "battlenet" && !/^.+#.*$/.test(temp_id)) {
+			displayError("Must include number for Battlenet usernames. For example, \"CaptainPrice#1911\".");
+			return;
+		}
+
 		searchParams.set("platform", temp_platform);
 		window.location.search = searchParams.toString();
 
