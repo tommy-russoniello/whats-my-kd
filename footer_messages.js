@@ -19,5 +19,7 @@ FOOTER_MESSAGES = [
   "cost of a single AC-130U Gunship: $190 million; cost of your mum: $0",
   "Hardscoping is actually just normal sniping",
   "You know I had to do it to em",
-  "The numbers, Mason..."
+  "The numbers, Mason...",
+  "*sneaking behind enemy lines* \"RELOADING!\"",
+  "Did you know: approximately 7,000,000 dads work at Activision"
 ]
