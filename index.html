@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html>
-	<head>
+  <head>
     <script async src="https://www.googletagmanager.com/gtag/js?id=UA-173046796-1"></script>
     <script>
       window.dataLayer = window.dataLayer || [];
@@ -9,91 +9,91 @@
 
       gtag('config', 'UA-173046796-1');
     </script>
-		<meta charset="utf-8" />
-		<title>What's My KD?</title>
-		<meta name="viewport" content="width=device-width, initial-scale=1">
-		<link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-		<link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-		<link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-		<link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
-		<link rel="manifest" href="manifest.json">
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
-		<link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
-		<script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
-		<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script src="date.js" type="text/javascript"></script>
-		<script src="footer_messages.js" type="text/javascript"></script>
-		<script src="main.js" type="text/javascript"></script>
-		<link href="main.css" type="text/css" rel="stylesheet" />
-	</head>
+    <meta charset="utf-8" />
+    <title>What's My KD?</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
+    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="manifest" href="manifest.json">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
+    <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="date.js" type="text/javascript"></script>
+    <script src="footer_messages.js" type="text/javascript"></script>
+    <script src="main.js" type="text/javascript"></script>
+    <link href="main.css" type="text/css" rel="stylesheet" />
+  </head>
 
-	<body>
-		<div class="box">
-			<div class="row header">
-				<div id="header">
-					<p id="banner"><a class="plain-anchor unselectable" href="index.html">What's my KD today?</a></p>
-				</div>
-			  <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-			  <label for="openSidebarMenu" class="sidebarIconToggle">
-			    <div class="spinner diagonal part-1"></div>
-			    <div class="spinner horizontal"></div>
-			    <div class="spinner diagonal part-2"></div>
-			  </label>
-			  <div id="sidebarMenu">
-			    <ul class="sidebarMenuInner">
-			      <li><a href="https://github.com/tommy-russoniello/whats-my-kd" target="_blank">Github Repo</a></li>
-						<li>
-							<p id="dark-mode-text">Dark Mode</p>
-							<div class="dark-mode-toggle">
-								<label class="toggle-control">
-								  <input id="dark-mode-toggle" type="checkbox">
-								  <span class="control"></span>
-								</label>
-							</div>
-						</li>
-			    </ul>
-			  </div>
-			</div>
-			<div id="content" class="row content">
-        <div id="content-wrapper">
-  				<div>
-  					<input class="search" type="textbox" id="username" placeholder="Enter player name">
-  					<button class="search" alt="search" id="search" type="button"><i class="fa fa-search fa-lg search"></i></button>
-  				</div>
-  				<form class="search">
-  					<div class="platform-selector">
-  						<input id="playstation-network" type="radio" name="platform" value="psn" />
-  			      <label class="platform playstation-network" for="playstation-network" title="Playstation Network"></label>
-  			      <input id="xbox-live" type="radio" name="platform" value="xbl" />
-  			      <label class="platform xbox-live" for="xbox-live" title="Xbox Live"></label>
-  			      <input id="activision" type="radio" name="platform" value="atvi" />
-  			      <label class="platform activision" for="activision" title="Activision"></label>
-  						<input id="battlenet" type="radio" name="platform" value="battlenet" />
-  			      <label class="platform battlenet" for="battlenet" title="battle.net"></label>
-  			    </div>
-  				</form>
-  				<div class="display">
-  					<div><p class="display text" id="date"></p></div>
-  					<div>
-  						<p class="display text"><a id="name" class="plain-anchor text" target="_blank"></a></p>
-  						<img class="display" id="platform-icon" alt="platform">
-  					</div>
-  					<div>
-  						<a id="avatar-anchor" class="plain-anchor text" target="_blank"><img class="display" id="avatar" alt="avatar"></a>
-  					</div>
-  					<div><p class="display text" id="time-played"></p></div>
-  					<div><p class="display text" id="wl"></p></div>
-  					<div><p class="display text" id="kd"></p></div>
-  					<div><p class="display text" id="comment"></p></div>
-  					<div class="back-button">
-  						<button id="back" alt="back"><i class="fa fa-arrow-circle-left display"></i></button>
-  					</div>
-  				</div>
-  				<p id="error"></p>
-  				<i id="loader" class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+  <body>
+    <div class="box">
+      <div class="row header">
+        <div id="header">
+          <p id="banner"><a class="plain-anchor unselectable" href="index.html">What's my KD today?</a></p>
         </div>
-			</div>
-			<div class="row footer"><p id="footer"></p></div>
-		</div>
-	</body>
+        <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
+        <label for="openSidebarMenu" class="sidebarIconToggle">
+          <div class="spinner diagonal part-1"></div>
+          <div class="spinner horizontal"></div>
+          <div class="spinner diagonal part-2"></div>
+        </label>
+        <div id="sidebarMenu">
+          <ul class="sidebarMenuInner">
+            <li><a href="https://github.com/tommy-russoniello/whats-my-kd" target="_blank">Github Repo</a></li>
+            <li>
+              <p id="dark-mode-text">Dark Mode</p>
+              <div class="dark-mode-toggle">
+                <label class="toggle-control">
+                  <input id="dark-mode-toggle" type="checkbox">
+                  <span class="control"></span>
+                </label>
+              </div>
+            </li>
+          </ul>
+        </div>
+      </div>
+      <div id="content" class="row content">
+        <div id="content-wrapper">
+          <div>
+            <input class="search" type="textbox" id="username" placeholder="Enter player name">
+            <button class="search" alt="search" id="search" type="button"><i class="fa fa-search fa-lg search"></i></button>
+          </div>
+          <form class="search">
+            <div class="platform-selector">
+              <input id="playstation-network" type="radio" name="platform" value="psn" />
+              <label class="platform playstation-network" for="playstation-network" title="Playstation Network"></label>
+              <input id="xbox-live" type="radio" name="platform" value="xbl" />
+              <label class="platform xbox-live" for="xbox-live" title="Xbox Live"></label>
+              <input id="activision" type="radio" name="platform" value="atvi" />
+              <label class="platform activision" for="activision" title="Activision"></label>
+              <input id="battlenet" type="radio" name="platform" value="battlenet" />
+              <label class="platform battlenet" for="battlenet" title="battle.net"></label>
+            </div>
+          </form>
+          <div class="display">
+            <div><p class="display text" id="date"></p></div>
+            <div>
+              <p class="display text"><a id="name" class="plain-anchor text" target="_blank"></a></p>
+              <img class="display" id="platform-icon" alt="platform">
+            </div>
+            <div>
+              <a id="avatar-anchor" class="plain-anchor text" target="_blank"><img class="display" id="avatar" alt="avatar"></a>
+            </div>
+            <div><p class="display text" id="time-played"></p></div>
+            <div><p class="display text" id="wl"></p></div>
+            <div><p class="display text" id="kd"></p></div>
+            <div><p class="display text" id="comment"></p></div>
+            <div class="back-button">
+              <button id="back" alt="back"><i class="fa fa-arrow-circle-left display"></i></button>
+            </div>
+          </div>
+          <p id="error"></p>
+          <i id="loader" class="fa fa-spinner fa-spin fa-5x fa-fw"></i>
+        </div>
+      </div>
+      <div class="row footer"><p id="footer"></p></div>
+    </div>
+  </body>
 </html>
