@@ -38,6 +38,11 @@ window.onload = function() {
 		$(".search").show();
 	}
 
+  function CheckResponseErrorMessage(data, message) {
+    return data && data.responseJSON && data.responseJSON.errors && data.responseJSON.errors[0] &&
+      data.responseJSON.errors[0].message === message;
+  }
+
 	function displayError(errorMessage) {
 		$(".search").show();
 		$(".display").hide();
@@ -110,10 +115,12 @@ window.onload = function() {
 		)
 			.done(function(data) { setData(data); })
 			.fail(function(data) {
-				if(data == null || data == "") {
+				if(data === null) {
 					displayError("The Tracker Network failed to respond.");
-				} else {
-					displayError("Player not found.");
+				} else if(CheckResponseErrorMessage(data, "Unable to retrieve match data at this time.")) {
+          displayError("The Call of Duty API failed to respond.");
+        } else {
+					displayError("Failed to retrieve match data.");
 				}
 			});
 	}
@@ -161,10 +168,10 @@ window.onload = function() {
 
 				getData("null");
 			})
-			.fail(function(data, status, xhr) {
-				if(data == null || data == "") {
+			.fail(function(data) {
+				if(data === null) {
 					displayError("The Tracker Network failed to respond.");
-        } else if(xhr == "Unavailable For Legal Reasons") {
+        } else if(CheckResponseErrorMessage(data, "This profile is private.")) {
           displayError("Player profile is private.");
 				} else {
 					displayError("Player not found: profile is private or name is incorrect.");
