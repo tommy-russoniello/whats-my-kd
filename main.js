@@ -104,6 +104,8 @@ window.onload = function() {
       } else {
         $("#comment").html("You're cracked, bro");
       }
+    } else {
+      $("#comment").html("");
     }
   }
 
