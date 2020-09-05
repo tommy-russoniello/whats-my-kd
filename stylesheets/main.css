@@ -32,7 +32,7 @@ body {
 }
 
 *:focus {
-    outline: none;
+  outline: none;
 }
 
 a.plain-anchor:link {
@@ -129,33 +129,42 @@ a.plain-anchor:visited {
 .dark-mode .text {
   color: var(--default-color);
 }
-#date {
+#date, #open-datepicker {
   font-size: 20pt;
-}
-.datepicker {
-  font-size: 20pt;
-  display: none;
 }
 #datepicker {
-  background: transparent;
-  background-color: transparent;
-  border: none;
-  color: transparent;
-
-  position: relative;
-
-  width: 33px;
-  height: 33px;
-
-  padding: 0;
-  margin: 0;
+  display: none;
 }
-#datepicker::-webkit-datetime-edit-day-field:focus,
-#datepicker::-webkit-datetime-edit-month-field:focus,
-#datepicker::-webkit-datetime-edit-year-field:focus {
-  background-color: transparent;
-  color: transparent;
+#open-datepicker {
+  display: inline;
+  color: var(--default-color-alt);
+  border: none;
   outline: none;
+  background-color: transparent;
+  cursor: pointer;
+}
+#open-datepicker:hover {
+  border: none;
+  color: var(--default-color-alt-hover);
+}
+.dark-mode #open-datepicker {
+  color: var(--default-color);
+}
+.dark-mode #open-datepicker:hover {
+  color: white;
+}
+.dark-mode .picker__box,
+.dark-mode .picker__button--today,
+.dark-mode .picker__button--clear,
+.dark-mode .picker__button--close {
+  background-color: black;
+  color: white;
+}
+.dark-mode .picker__nav--next:before {
+  border-left-color: white;
+}
+.dark-mode .picker__nav--prev:before {
+  border-right-color: white;
 }
 #name {
   font-size: 20pt;
@@ -176,42 +185,6 @@ a.plain-anchor:visited {
 }
 #comment {
   font-size: 15pt;
-}
-
-/* https://codepen.io/andyftp/pen/EQoKxq */
-#datepicker:after {
-  content: "\f073";
-
-  color: var(--default-color-alt);
-
-  font-family: "Font Awesome 5 Free";
-  font-weight: 500;
-
-  padding: 0 5px;
-}
-.dark-mode #datepicker:after {
-    color: var(--default-color);
-}
-#datepicker:hover:after {
-    color: var(--default-color-alt-hover);
-}
-.dark-mode #datepicker:hover:after {
-    color: white;
-}
-#datepicker::-webkit-calendar-picker-indicator {
-  background: transparent;
-
-  position: absolute;
-
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-
-  width: auto;
-  height: auto;
-
-  margin: 0;
 }
 
 .back-button button {
@@ -291,16 +264,16 @@ input:-webkit-autofill:active {
   appearance: none;
 }
 .playstation-network {
-  background-image: url('images/psn.png');
+  background-image: url('../images/psn.png');
 }
 .xbox-live {
-  background-image: url('images/xbl.png');
+  background-image: url('../images/xbl.png');
 }
 .activision {
-  background-image: url('images/atvi.png');
+  background-image: url('../images/atvi.png');
 }
 .battlenet {
-  background-image: url('images/battlenet.png');
+  background-image: url('../images/battlenet.png');
 }
 
 .platform-selector input:active +.platform {
@@ -532,14 +505,7 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
     margin-top: 0;
   }
 
-  .datepicker {
-    font-size: 15pt;
-  }
-  #datepicker {
-    height: 26px;
-    width: 26px;
-  }
-  #date, #name {
+  #date, #name, #open-datepicker {
     font-size: 15pt;
   }
   #kd {

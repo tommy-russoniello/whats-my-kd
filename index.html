@@ -13,18 +13,22 @@
     <title>What's My KD?</title>
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="shortcut icon" type="image/x-icon" href="favicon.ico">
-    <link rel="apple-touch-icon" sizes="180x180" href="apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="favicon-16x16.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="images/favicons/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="images/favicons/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="images/favicons/favicon-16x16.png">
     <link rel="manifest" href="manifest.json">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js" type="text/javascript"></script>
     <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@500&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/js-cookie@rc/dist/js.cookie.min.js"></script>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.14.0/css/all.min.css">
-    <script src="date.js" type="text/javascript"></script>
-    <script src="footer_messages.js" type="text/javascript"></script>
-    <script src="main.js" type="text/javascript"></script>
-    <link href="main.css" type="text/css" rel="stylesheet" />
+    <script src="scripts/pickadate/picker.js" type="text/javascript"></script>
+    <script src="scripts/pickadate/picker.date.js" type="text/javascript"></script>
+    <script src="scripts/date.js" type="text/javascript"></script>
+    <script src="scripts/footer_messages.js" type="text/javascript"></script>
+    <script src="scripts/main.js" type="text/javascript"></script>
+    <link href="stylesheets/pickadate/default.css" type="text/css" rel="stylesheet" />
+    <link href="stylesheets/pickadate/default.date.css" type="text/css" rel="stylesheet" />
+    <link href="stylesheets/main.css" type="text/css" rel="stylesheet" />
   </head>
 
   <body>
@@ -75,7 +79,8 @@
           <div class="display">
             <div>
               <p id="date" class="display text date"></p>
-              <input type="date" placeholder="yyyy-mm-dd" id="datepicker" class="datepicker text display" />
+              <button id="open-datepicker" alt="open datepicker"><i id="datepicker-icon" class="far fa-calendar-alt display"></i></button>
+              <input id="datepicker" type="text" />
             </div>
             <div>
               <p class="display text"><a id="name" class="plain-anchor text" target="_blank"></a></p>
