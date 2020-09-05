@@ -26,3 +26,8 @@ function prettyDateString(date) {
   return `${DAY_NAMES[date.getDay()]}, ${MONTH_NAMES[date.getMonth()]} ` +
     `${date.getDate()}, ${date.getFullYear()}`
 }
+
+function toDate(string) {
+  values = string.split('-');
+  return new Date(values[0], parseInt(values[1]) - 1, values[2]);
+}

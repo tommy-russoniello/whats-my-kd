@@ -21,5 +21,6 @@ FOOTER_MESSAGES = [
   "You know I had to do it to em",
   "The numbers, Mason...",
   "*sneaking behind enemy lines* \"RELOADING!\"",
-  "Did you know: approximately 7,000,000 dads work at Activision"
+  "Did you know: approximately 7,000,000 dads work at Activision",
+  "1v1 me, bro"
 ]

@@ -3,6 +3,7 @@
   --dark-mode-color-alt: #2b2b2b;
   --default-color: #e6e6e6;
   --default-color-alt: #2a4966;
+  --default-color-alt-hover: #4273a1;
 }
 
 html, body {
@@ -131,6 +132,31 @@ a.plain-anchor:visited {
 #date {
   font-size: 20pt;
 }
+.datepicker {
+  font-size: 20pt;
+  display: none;
+}
+#datepicker {
+  background: transparent;
+  background-color: transparent;
+  border: none;
+  color: transparent;
+
+  position: relative;
+
+  width: 33px;
+  height: 33px;
+
+  padding: 0;
+  margin: 0;
+}
+#datepicker::-webkit-datetime-edit-day-field:focus,
+#datepicker::-webkit-datetime-edit-month-field:focus,
+#datepicker::-webkit-datetime-edit-year-field:focus {
+  background-color: transparent;
+  color: transparent;
+  outline: none;
+}
 #name {
   font-size: 20pt;
   text-align: center;
@@ -152,6 +178,42 @@ a.plain-anchor:visited {
   font-size: 15pt;
 }
 
+/* https://codepen.io/andyftp/pen/EQoKxq */
+#datepicker:after {
+  content: "\f073";
+
+  color: var(--default-color-alt);
+
+  font-family: "Font Awesome 5 Free";
+  font-weight: 500;
+
+  padding: 0 5px;
+}
+.dark-mode #datepicker:after {
+    color: var(--default-color);
+}
+#datepicker:hover:after {
+    color: var(--default-color-alt-hover);
+}
+.dark-mode #datepicker:hover:after {
+    color: white;
+}
+#datepicker::-webkit-calendar-picker-indicator {
+  background: transparent;
+
+  position: absolute;
+
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+
+  width: auto;
+  height: auto;
+
+  margin: 0;
+}
+
 .back-button button {
   display: inline;
   color: var(--default-color-alt);
@@ -162,7 +224,7 @@ a.plain-anchor:visited {
 }
 .back-button button:hover {
   border: none;
-  color: #4273a1;
+  color: var(--default-color-alt-hover);
 }
 .dark-mode .back-button button {
   color: var(--default-color);
@@ -470,6 +532,13 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
     margin-top: 0;
   }
 
+  .datepicker {
+    font-size: 15pt;
+  }
+  #datepicker {
+    height: 26px;
+    width: 26px;
+  }
   #date, #name {
     font-size: 15pt;
   }

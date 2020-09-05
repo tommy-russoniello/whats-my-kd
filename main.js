@@ -17,15 +17,17 @@ window.onload = function() {
     $("#dark-mode-toggle").attr("checked", "checked");
   }
 
+  $("#datepicker").val(new Date().toJSON().slice(0, 10))
   $("#footer").html(generateFooterMessage());
 
-  var wins = 0;
-  var losses = 0;
-  var kills = 0;
-  var deaths = 0;
-  var timePlayed = 0;
-  var now;
+  var wins;
+  var losses;
+  var kills;
+  var deaths;
+  var timePlayed;
   var start;
+
+  resetStats();
 
   var urlParams = new URLSearchParams(window.location.search);
   var player = urlParams.get("id");
@@ -152,7 +154,8 @@ window.onload = function() {
       start.setHours(6);
     }
 
-    $("#date").html(prettyDateString(start));
+    setDate();
+
     $.getJSON(
       `${CORS_PROXY_URL}/${API_URL}/${PROFILE_PATH}/${platform}/${encodedPlayer}`
     )
@@ -177,6 +180,14 @@ window.onload = function() {
           displayError("Player not found: profile is private or name is incorrect.");
         }
       });
+  }
+
+  function resetStats() {
+    wins = 0;
+    losses = 0;
+    kills = 0;
+    deaths = 0;
+    timePlayed = 0;
   }
 
   function setData(data) {
@@ -208,6 +219,10 @@ window.onload = function() {
     } else {
       displayData();
     }
+  }
+
+  function setDate() {
+    $("#date").html(prettyDateString(start));
   }
 
   $("#username").on("keyup", function() {
@@ -254,7 +269,7 @@ window.onload = function() {
     window.location.search = "";
   });
 
-  $("#dark-mode-toggle").on("click", function() {
+  $("#dark-mode-toggle").click(function() {
     if(darkMode) {
       Cookies.remove("dark-mode");
     } else {
@@ -262,6 +277,20 @@ window.onload = function() {
     }
 
     window.toggleDarkMode();
+  });
+
+  $("#datepicker").change(function() {
+    if($("#datepicker").val() == null || $("#datepicker").val() == "") {
+      return;
+    }
+
+    start = toDate($("#datepicker").val());
+    start.setHours(6);
+    setDate();
+    resetStats();
+    $(".display").hide();
+    $("#loader").show();
+    getData(new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1, 6).getTime());
   });
 }
 
