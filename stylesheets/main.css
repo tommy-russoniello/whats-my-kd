@@ -117,7 +117,7 @@ a.plain-anchor:visited {
 
   font-size: 50pt;
 
-  z-index: 1;
+  z-index: 100;
 }
 
 .text {
@@ -130,7 +130,7 @@ a.plain-anchor:visited {
   color: var(--default-color);
 }
 #date, #open-datepicker {
-  font-size: 20pt;
+  font-size: 15pt;
 }
 #datepicker {
   display: none;
@@ -506,13 +506,13 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   }
 
   #date, #name, #open-datepicker {
-    font-size: 15pt;
+    font-size: 12pt;
   }
   #kd {
     font-size: 17pt;
   }
   #wl, #time-played {
-    font-size: 13pt;
+    font-size: 12pt;
   }
   #comment {
     font-size: 12pt;
