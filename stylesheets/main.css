@@ -160,6 +160,10 @@ a.plain-anchor:visited {
   background-color: black;
   color: white;
 }
+.dark-mode .picker__day--disabled {
+  background-color: var(--dark-mode-color-alt);
+  border-color: transparent;
+}
 .dark-mode .picker__nav--next:before {
   border-left-color: white;
 }
