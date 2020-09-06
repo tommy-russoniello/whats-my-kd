@@ -16,7 +16,12 @@ window.addEventListener("DOMContentLoaded", function() {
     window.localStorage.setItem("version", VERSION)
   }
 
-  if(preferences && JSON.parse(preferences).darkMode) {
+  preferences = JSON.parse(preferences)
+  if(preferences === null) {
+    preferences = defaultPreferences();
+    window.localStorage.setItem("preferences", JSON.stringify(preferences))
+  }
+  if(preferences.darkMode) {
     window.toggleDarkMode();
   }
 });
@@ -26,11 +31,28 @@ window.onload = function() {
     $("#dark-mode-toggle").attr("checked", "checked");
   }
 
+  var today = new Date();
+  if(today.getHours() > 5) {
+    today = new Date(today.getFullYear(), today.getMonth(), today.getDate(), 6);
+  } else {
+    today = new Date(today.getTime());
+    today.setDate(today.getDate() - 1);
+    today.setHours(6);
+  }
+
   var datepicker = $("#datepicker").pickadate({
+    max: today,
     onClose: function() {
       $(document.activeElement).blur();
     }
   }).pickadate('picker');
+
+  // Make datepicker's "today" match our concept of "today"
+  if(!sameDay(today, datepicker.component.now())) {
+    datepicker.component.item.now = datepicker.component.create(today);
+    datepicker.set('highlight', today);
+    datepicker.render();
+  }
 
   $("#footer").html(generateFooterMessage());
 
@@ -129,22 +151,26 @@ window.onload = function() {
     return FOOTER_MESSAGES[Math.floor(Math.random() * FOOTER_MESSAGES.length)]
   }
 
-  function getData(end = null) {
-    storeKey = null;
-    if(end) {
-      storeKey = toDateString(end);
-      if(playerStorage[storeKey]) {
-        return setDataFromStore(playerStorage[storeKey]);
-      }
+  function getData() {
+    end = new Date(start.getTime());
+    end.setDate(start.getDate() + 1);
+    storeKey = toDateString(start);
 
-      end = end.getTime();
+    if(sameDay(start, today)) {
+      getDataHelper(end)
     } else {
-      end = 'null';
+      if(playerStorage[storeKey]) {
+        setDataFromStore(playerStorage[storeKey]);
+      } else {
+        getDataHelper(end, storeKey)
+      }
     }
+  }
 
+  function getDataHelper(end, storeKey = null) {
     $.getJSON(
       `${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodedPlayer}?` +
-      `type=mp&next=${end}`
+      `type=mp&next=${end.getTime()}`
     )
       .done(function(data) { setData(data, storeKey); })
       .fail(function(data) {
@@ -176,15 +202,7 @@ window.onload = function() {
     $("#avatar-anchor").attr("href", full_stats_url);
     kills = 0;
     deaths = 0;
-    now = new Date();
-    if(now.getHours() > 5) {
-      start = new Date(now.getFullYear(), now.getMonth(), now.getDate(), 6);
-    } else {
-      start = new Date(now.getTime());
-      start.setDate(start.getDate() - 1);
-      start.setHours(6);
-    }
-
+    start = new Date(today.getTime());
     setDate();
 
     $.getJSON(
@@ -250,8 +268,9 @@ window.onload = function() {
       timePlayed += stats.timePlayed.value;
     }
 
-    if(i == matches.length) {
-      return getData(new Date(data.data.metadata.next));
+    next = new Date(data.data.metadata.next);
+    if(i == matches.length && next > start) {
+      return getDataHelper(next);
     } else if(storeKey) {
       playerStorage[storeKey] = {
         wins: wins,
@@ -359,6 +378,12 @@ window.onload = function() {
     event.stopPropagation()
     datepicker.open();
   });
+}
+
+function defaultPreferences() {
+  return {
+    darkMode: false
+  }
 }
 
 function toggleDarkMode() {
