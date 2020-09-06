@@ -27,6 +27,12 @@ function prettyDateString(date) {
     `${date.getDate()}, ${date.getFullYear()}`
 }
 
+function sameDay(first, second) {
+  return first.getFullYear() === second.getFullYear() &&
+    first.getMonth() === second.getMonth() &&
+    first.getDate() === second.getDate();
+}
+
 function toDate(string) {
   values = string.split('-');
   return new Date(values[0], parseInt(values[1]) - 1, values[2]);

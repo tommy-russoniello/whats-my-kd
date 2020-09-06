@@ -1,5 +1,5 @@
 API_URL = "https://api.tracker.gg/api"
-CORS_PROXY_URL = "https://cors-anywhere.herokuapp.com"//"https://whats-my-kd-cors-proxy.herokuapp.com"
+CORS_PROXY_URL = "https://whats-my-kd-cors-proxy.herokuapp.com"
 MATCHES_PATH = "v1/modern-warfare/matches"
 PROFILE_PATH = "v2/modern-warfare/standard/profile"
 FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
@@ -292,10 +292,17 @@ window.onload = function() {
       return;
     }
 
+    previous_date = start
     start = toDate(value);
     start.setHours(6);
     setDate();
     resetStats();
+
+    if(sameDay(start, previous_date) || start > new Date()) {
+      displayData();
+      return;
+    }
+
     $(".display").hide();
     $("#loader").show();
     getData(new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1, 6).getTime());
