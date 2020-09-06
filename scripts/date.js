@@ -37,3 +37,7 @@ function toDate(string) {
   values = string.split('-');
   return new Date(values[0], parseInt(values[1]) - 1, values[2]);
 }
+
+function toDateString(date) {
+  return date.toJSON().slice(0, 10).replace(/-/g, "");
+}

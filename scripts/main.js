@@ -3,11 +3,20 @@ CORS_PROXY_URL = "https://whats-my-kd-cors-proxy.herokuapp.com"
 MATCHES_PATH = "v1/modern-warfare/matches"
 PROFILE_PATH = "v2/modern-warfare/standard/profile"
 FULL_STATS_URL_PREFIX = "https://cod.tracker.gg/modern-warfare/profile"
+VERSION = '0'
 
 var darkMode = false;
 
-window.addEventListener('DOMContentLoaded', function() {
-  if(Cookies.get("dark-mode") === "true") {
+window.addEventListener("DOMContentLoaded", function() {
+  preferences = window.localStorage.getItem("preferences")
+  version = window.localStorage.getItem("version")
+  if(version !== VERSION) {
+    window.localStorage.clear()
+    window.localStorage.setItem("preferences", preferences)
+    window.localStorage.setItem("version", VERSION)
+  }
+
+  if(preferences && JSON.parse(preferences).darkMode) {
     window.toggleDarkMode();
   }
 });
@@ -36,6 +45,8 @@ window.onload = function() {
 
   var urlParams = new URLSearchParams(window.location.search);
   var player = urlParams.get("id");
+  var playerKey;
+  var playerStorage;
   var encodedPlayer = encodeURIComponent(player);
   var platform = urlParams.get("platform");
   if(player && platform) {
@@ -118,11 +129,24 @@ window.onload = function() {
     return FOOTER_MESSAGES[Math.floor(Math.random() * FOOTER_MESSAGES.length)]
   }
 
-  function getData(next) {
+  function getData(end = null) {
+    storeKey = null;
+    if(end) {
+      storeKey = toDateString(end);
+      if(playerStorage[storeKey]) {
+        return setDataFromStore(playerStorage[storeKey]);
+      }
+
+      end = end.getTime();
+    } else {
+      end = 'null';
+    }
+
     $.getJSON(
-      `${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodedPlayer}?type=mp&next=${next}`
+      `${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodedPlayer}?` +
+      `type=mp&next=${end}`
     )
-      .done(function(data) { setData(data); })
+      .done(function(data) { setData(data, storeKey); })
       .fail(function(data) {
         if(data === null) {
           displayError("The Tracker Network failed to respond.");
@@ -169,14 +193,19 @@ window.onload = function() {
       .done(function(data) {
         $(".search").hide();
         $("#platform-icon").attr("src", `images/${platform}.png`);
-        $("#name").html(data.data.platformInfo.platformUserHandle);
+        name = data.data.platformInfo.platformUserHandle
+        playerKey = `${platform}-${name}`
+        $("#name").html(name);
         avatarUrl = data.data.platformInfo.avatarUrl
         if(avatarUrl == null || avatarUrl == "") {
           avatarUrl = "images/default_avatar.png"
         }
         $("#avatar").attr("src", avatarUrl);
 
-        getData("null");
+        playerStorage = window.localStorage.getItem(playerKey)
+        playerStorage = playerStorage ? JSON.parse(playerStorage) : {}
+
+        getData();
       })
       .fail(function(data) {
         if(data === null) {
@@ -197,7 +226,7 @@ window.onload = function() {
     timePlayed = 0;
   }
 
-  function setData(data) {
+  function setData(data, storeKey) {
     if(!("data" in data) || !("matches" in data.data)) {
       displayError("The Tracker Network failed to retrieve the data.");
     }
@@ -222,10 +251,30 @@ window.onload = function() {
     }
 
     if(i == matches.length) {
-      getData(data.data.metadata.next);
-    } else {
-      displayData();
+      return getData(new Date(data.data.metadata.next));
+    } else if(storeKey) {
+      playerStorage[storeKey] = {
+        wins: wins,
+        losses: losses,
+        kills: kills,
+        deaths: deaths,
+        timePlayed: timePlayed
+      }
+
+      window.localStorage.setItem(playerKey, JSON.stringify(playerStorage))
     }
+
+    displayData();
+  }
+
+  function setDataFromStore(data) {
+    wins = data.wins
+    losses = data.losses
+    kills = data.kills
+    deaths = data.deaths
+    timePlayed = data.timePlayed
+
+    displayData();
   }
 
   function setDate() {
@@ -277,12 +326,10 @@ window.onload = function() {
   });
 
   $("#dark-mode-toggle").click(function() {
-    if(darkMode) {
-      Cookies.remove("dark-mode");
-    } else {
-      Cookies.set("dark-mode", "true", { expires: 365 });
-    }
-
+    preferences = window.localStorage.getItem("preferences")
+    preferences = preferences ? JSON.parse(preferences) : {}
+    preferences.darkMode = !darkMode
+    window.localStorage.setItem("preferences", JSON.stringify(preferences))
     window.toggleDarkMode();
   });
 
@@ -305,7 +352,7 @@ window.onload = function() {
 
     $(".display").hide();
     $("#loader").show();
-    getData(new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1, 6).getTime());
+    getData(new Date(start.getFullYear(), start.getMonth(), start.getDate() + 1, 6));
   });
 
   $("#open-datepicker").click(function(event) {
