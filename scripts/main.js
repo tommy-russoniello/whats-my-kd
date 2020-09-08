@@ -12,6 +12,8 @@ var chart;
 var viewState;
 
 window.addEventListener("DOMContentLoaded", function() {
+  $("#footer-message").html(generateFooterMessage());
+
   preferences = window.localStorage.getItem("preferences")
   version = window.localStorage.getItem("version")
   if(version !== VERSION) {
@@ -64,8 +66,6 @@ window.onload = function() {
   var datepickerToday = datepickers[0];
   var datepickerStart = datepickers[1];
   var datepickerEnd = datepickers[2];
-
-  $("#footer-message").html(generateFooterMessage());
 
   var chartGenerated = false;
 
@@ -346,10 +346,6 @@ window.onload = function() {
       $(".display-today").hide();
       $(".display-history").show();
     }
-  }
-
-  function generateFooterMessage() {
-    return FOOTER_MESSAGES[Math.floor(Math.random() * FOOTER_MESSAGES.length)]
   }
 
   function getData(options = {}) {
@@ -734,6 +730,10 @@ function defaultPreferences() {
   return {
     darkMode: false
   }
+}
+
+function generateFooterMessage() {
+  return FOOTER_MESSAGES[Math.floor(Math.random() * FOOTER_MESSAGES.length)]
 }
 
 function toggleDarkMode() {
