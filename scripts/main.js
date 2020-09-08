@@ -21,19 +21,15 @@ window.addEventListener("DOMContentLoaded", function() {
   }
 
   preferences = JSON.parse(preferences)
-  if(preferences === null) {
+  if(!preferences) {
     preferences = defaultPreferences();
     window.localStorage.setItem("preferences", JSON.stringify(preferences))
   }
-  if(preferences.darkMode) {
-    window.toggleDarkMode();
-  }
+  if(preferences.darkMode) window.toggleDarkMode();
 });
 
 window.onload = function() {
-  if(darkMode) {
-    $("#toggle-dark-mode").attr("checked", "checked");
-  }
+  if(darkMode) $("#toggle-dark-mode").attr("checked", "checked");
 
   var today = new Date();
   if(today.getHours() > 5) {
@@ -203,22 +199,12 @@ window.onload = function() {
     $(".display").show();
     $("#show-today, #show-history").addClass("bottom-nav-selectable");
 
-    if (deaths === 0) {
-      deaths_for_ratio = 1;
-    } else {
-      deaths_for_ratio = deaths;
-    }
-    kd_ratio = (kills / deaths_for_ratio).toPrecision(RATIO_PRECISION);
+    kd_ratio = (kills / (deaths || 1)).toPrecision(RATIO_PRECISION);
     kills_string = pluralityString(kills, 'kill', 'kills');
     deaths_string = pluralityString(deaths, 'death', 'deaths');
     $("#kd").html(`${kills_string} / ${deaths_string} = ${kd_ratio} KD`);
 
-    if(losses === 0) {
-      losses_for_ratio = 1;
-    } else {
-      losses_for_ratio = losses;
-    }
-    wl_ratio = (wins / losses_for_ratio).toPrecision(RATIO_PRECISION);
+    wl_ratio = (wins / (losses || 1)).toPrecision(RATIO_PRECISION);
     wins_string = pluralityString(wins, 'win', 'wins');
     losses_string = pluralityString(losses, 'loss', 'losses');
     $("#wl").html(`${wins_string} / ${losses_string} = ${wl_ratio} WL`);
@@ -401,7 +387,7 @@ window.onload = function() {
     )
       .done(function(data) { setData(data, context); })
       .fail(function(data) {
-        if(data === null) {
+        if(!data) {
           displayError("The Tracker Network failed to respond.");
         } else if(CheckResponseErrorMessage(data, "Unable to retrieve match data at this time.")) {
           displayError("The Call of Duty API failed to respond.");
@@ -416,14 +402,7 @@ window.onload = function() {
   }
 
   function pluralityString(number, singularWord, pluralWord) {
-    string = `${number} `;
-    if(number === 1) {
-      string += singularWord;
-    } else {
-      string += pluralWord;
-    }
-
-    return string;
+    return string = `${number} ${number === 1 ? singularWord : pluralWord}`;
   }
 
   function newDayData(day) {
@@ -458,9 +437,7 @@ window.onload = function() {
         $("#name-today").html(name);
         $("#name-history").html(name);
         avatarUrl = data.data.platformInfo.avatarUrl
-        if(avatarUrl === null || avatarUrl === "") {
-          avatarUrl = "images/default_avatar.png"
-        }
+        if(!avatarUrl) avatarUrl = "images/default_avatar.png";
         $("#avatar-today").attr("src", avatarUrl);
         $("#avatar-history").attr("src", avatarUrl);
 
@@ -472,7 +449,7 @@ window.onload = function() {
         getData();
       })
       .fail(function(data) {
-        if(data === null) {
+        if(!data) {
           displayError("The Tracker Network failed to respond.");
         } else if(CheckResponseErrorMessage(data, "This profile is private.")) {
           displayError("Player profile is private.");
@@ -608,21 +585,16 @@ window.onload = function() {
     $(".loader").show();
     var searchParams = new URLSearchParams();
     var temp_id = $("#username").val()
-    if(temp_id === null || temp_id === "") {
-      displayError("Enter a username.");
-      return;
-    }
+    if(!temp_id) return displayError("Enter a username.");
 
     searchParams.set("id", temp_id);
     var temp_platform = $("input[name=platform]:checked").val()
-    if(temp_platform === null || temp_platform === "") {
-      displayError("Select a platform.");
-      return;
-    }
+    if(!temp_platform) return displayError("Select a platform.");
 
     if(temp_platform === "battlenet" && !/^.+#.*$/.test(temp_id)) {
-      displayError("Must include number for Battlenet usernames. For example, \"CaptainPrice#1911\".");
-      return;
+      return displayError(
+        "Must include number for Battlenet usernames. For example, \"CaptainPrice#1911\"."
+      );
     }
 
     searchParams.set("platform", temp_platform);
@@ -698,7 +670,7 @@ window.onload = function() {
 
   $("#datepicker-today").change(function() {
     value = datepickerToday.get('select', 'yyyy-mm-dd')
-    if(value === null || value === "") return;
+    if(!value) return;
 
     previous_date = start
     start = toDate(value);
@@ -706,10 +678,7 @@ window.onload = function() {
     setDate();
     resetStats();
 
-    if(sameDay(start, previous_date) || start > new Date()) {
-      displayData();
-      return;
-    }
+    if(sameDay(start, previous_date) || start > new Date()) return displayData();
 
     $(".display").hide();
     $(".loader").show();
@@ -725,7 +694,7 @@ window.onload = function() {
 
   $("#datepicker-start").change(function() {
     value = datepickerStart.get('select', 'yyyy-mm-dd')
-    if(value === null || value === "") return;
+    if(!value) return;
 
     previous_date = historyStart;
     historyStart = toDate(value);
@@ -736,7 +705,7 @@ window.onload = function() {
   });
   $("#datepicker-end").change(function() {
     value = datepickerEnd.get('select', 'yyyy-mm-dd')
-    if(value === null || value === "") return;
+    if(!value) return;
 
     previous_date = historyEnd;
     historyEnd = toDate(value);
