@@ -86,12 +86,19 @@ a.plain-anchor:visited {
   display: none;
 }
 
-#avatar {
+#avatar-today {
   height: 75px;
   width: 75px;
 }
+#avatar-history {
+  height: 48px;
+  width: 48px;
+}
+#avatar-anchor-history {
+  vertical-align: middle;
+}
 
-#platform-icon {
+#platform-icon-today, #platform-icon-history {
   height: 20px;
   width: 20px;
 }
@@ -129,13 +136,20 @@ a.plain-anchor:visited {
 .dark-mode .text {
   color: var(--default-color);
 }
-#date, #open-datepicker {
+#date-today,
+#open-datepicker-today,
+#open-datepicker-start,
+#open-datepicker-end,
+#history-submit {
   font-size: 15pt;
 }
-#datepicker {
+#date-history {
+  font-size: 10pt;
+}
+#datepicker-today, #datepicker-start, #datepicker-end {
   display: none;
 }
-#open-datepicker {
+#open-datepicker-today, #open-datepicker-start, #open-datepicker-end, #history-submit {
   display: inline;
   color: var(--default-color-alt);
   border: none;
@@ -143,14 +157,23 @@ a.plain-anchor:visited {
   background-color: transparent;
   cursor: pointer;
 }
-#open-datepicker:hover {
+#open-datepicker-today:hover,
+#open-datepicker-start:hover,
+#open-datepicker-end:hover,
+#history-submit:hover {
   border: none;
   color: var(--default-color-alt-hover);
 }
-.dark-mode #open-datepicker {
+.dark-mode #open-datepicker-today,
+.dark-mode #open-datepicker-start,
+.dark-mode #open-datepicker-end,
+.dark-mode #history-submit {
   color: var(--default-color);
 }
-.dark-mode #open-datepicker:hover {
+.dark-mode #open-datepicker-today:hover,
+.dark-mode #open-datepicker-start:hover,
+.dark-mode #open-datepicker-end:hover,
+.dark-mode #history-submit:hover {
   color: white;
 }
 .dark-mode .picker__box,
@@ -170,15 +193,15 @@ a.plain-anchor:visited {
 .dark-mode .picker__nav--prev:before {
   border-right-color: white;
 }
-#name {
+#name-today, #name-history {
   font-size: 20pt;
   text-align: center;
   text-decoration: underline;
 }
-#name:hover {
+#name-today:hover, #name-history:hover {
   color: #1d334a;
 }
-.dark-mode #name:hover {
+.dark-mode #name-today:hover, .dark-mode #name-history:hover {
   color: white;
 }
 #kd {
@@ -189,28 +212,6 @@ a.plain-anchor:visited {
 }
 #comment {
   font-size: 15pt;
-}
-
-.back-button button {
-  display: inline;
-  color: var(--default-color-alt);
-  border: none;
-  outline: none;
-  background-color: Transparent;
-  cursor: pointer;
-}
-.back-button button:hover {
-  border: none;
-  color: var(--default-color-alt-hover);
-}
-.dark-mode .back-button button {
-  color: var(--default-color);
-}
-.dark-mode .back-button button:hover {
-  color: white;
-}
-#back {
-  font-size: 75px;
 }
 
 input:-webkit-autofill,
@@ -341,7 +342,7 @@ input:-webkit-autofill:active {
   color: #fff;
   text-transform: uppercase;
   font-weight: bold;
-  padding: 20px;
+  padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
 .sidebarMenuInner li span {
@@ -477,15 +478,88 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
   -webkit-transition: left 0.15s ease-in;
   transition: left 0.15s ease-in;
 }
-.dark-mode-toggle {
+.toggle {
   position: relative;
   display: inline-block;
 }
-#dark-mode-text {
+#toggle-text-dark-mode {
   margin-right: 15px;
 }
 .control {
   cursor: pointer;
+}
+
+.display-history {
+  display: none;
+}
+.display-history text {
+  color: white;
+}
+
+g[class^='raphael-group-'][class$='-creditgroup'] text {
+  display: none;
+}
+#fusion-charts-credit {
+  font-size: 5pt !important;
+}
+
+.bottom-nav {
+  display: flex;
+  width: 100%;
+  flex-wrap: nowrap;
+  align-items: baseline;
+  justify-content: space-evenly;
+}
+
+#show-search, #show-today, #show-history {
+  display: flex;
+}
+#footer {
+  background-color: var(--default-color-alt);
+  z-index: 100;
+}
+.dark-mode #footer {
+  background-color: var(--dark-mode-color-alt);
+}
+#show-search, #show-today, #show-history {
+  font-size: 40pt;
+  margin-top: 8px;
+  margin-bottom: 8px;
+  display: inline;
+  color: gray;
+  border: none;
+  outline: none;
+  background-color: transparent;
+  vertical-align: middle;
+}
+.bottom-nav-selected {
+  color: white !important;
+}
+.bottom-nav-selected .show-search:hover,
+.bottom-nav-selected .show-today:hover,
+.bottom-nav-selected .show-history:hover {
+  color: white !important;
+}
+.bottom-nav-selectable .show-search:hover,
+.bottom-nav-selectable .show-today:hover,
+.bottom-nav-selectable .show-history:hover {
+  cursor: pointer;
+  border: none;
+  color: var(--default-color);
+}
+#footer-message {
+  display: inline-block;
+  text-align: center;
+  border-top: 1px solid #233f59;
+  margin: 0;
+  padding-top: 5px;
+  padding-bottom: 5px;
+  margin-left: auto;
+  margin-right: auto;
+  color: var(--default-color);
+}
+.dark-mode #footer-message {
+  border-color: #242424;
 }
 
 @media screen and (max-width: 1000px) {
@@ -509,8 +583,17 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
     margin-top: 0;
   }
 
-  #date, #name, #open-datepicker {
+  #date-today,
+  #name-today,
+  #name-history,
+  #open-datepicker-today,
+  #open-datepicker-start,
+  #open-datepicker-end,
+  #history-submit {
     font-size: 12pt;
+  }
+  #date-history {
+    font-size: 8pt;
   }
   #kd {
     font-size: 17pt;
@@ -533,12 +616,13 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
     height: 40px;
   }
 
-  #avatar {
+  #avatar-today {
     height: 55px;
     width: 55px;
   }
-  #back {
-    font-size: 55px;
+  #avatar-history {
+    height: 35px;
+    width: 35px;
   }
 }
 
@@ -557,14 +641,15 @@ input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
     height: 30px;
   }
 
-  #avatar {
+  #avatar-today {
     height: 35px;
     width: 35px;
   }
-  #back {
-    font-size: 35px;
+  #avatar-history {
+    height: 22px;
+    width: 22px;
   }
-  #footer {
+  #footer-message {
     font-size: 10pt;
   }
 }
