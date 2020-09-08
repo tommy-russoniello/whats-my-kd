@@ -255,7 +255,7 @@ window.onload = function() {
         killDeath = dayData.kills / (dayData.deaths === 0 ? 1 : dayData.deaths);
         winLosses.push({ value: winLoss.toPrecision(RATIO_PRECISION) });
         killDeaths.push({ value: killDeath.toPrecision(RATIO_PRECISION) });
-        timePlayeds.push({ value: Math.floor(dayData.timePlayed / (60 * 60))  })
+        timePlayeds.push({ value: dayData.timePlayed / (60 * 60)  })
       } else {
         winLosses.push({});
         killDeaths.push({});
