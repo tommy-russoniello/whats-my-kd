@@ -1,0 +1,17 @@
+{
+  "standard": {
+    "globals": [
+      "$",
+      "FusionCharts",
+      "event",
+      "daysBetween",
+      "numericDateString",
+      "prettyDateString",
+      "sameDay",
+      "shortDateString",
+      "shortPrettyDateString",
+      "toDate",
+      "FOOTER_MESSAGES"
+    ]
+  }
+}
