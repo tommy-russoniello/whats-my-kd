@@ -5,7 +5,7 @@ MATCHES_PATH = "v1/modern-warfare/matches";
 PROFILE_PATH = "v2/modern-warfare/standard/profile";
 RATIO_PRECISION = 4;
 VIEW_STATES = { search: 1, today: 2, history: 3 };
-VERSION = '0';
+VERSION = '1';
 
 var darkMode = false;
 var chart;
@@ -371,6 +371,8 @@ window.onload = function() {
   function getDataForDay(context) {
     if(playerStorage[numericDateString(context.start)]) {
       setDataFromStore(context);
+    } else if(context.remainingMatches) {
+      setData(null, context)
     } else {
       getDataHelper(context)
     }
@@ -480,12 +482,19 @@ window.onload = function() {
   }
 
   function setData(data, context) {
-    if(!("data" in data) || !("matches" in data.data)) {
-      displayError("The Tracker Network failed to retrieve the data.");
+    if(data) {
+      if(!("data" in data) || !("matches" in data.data)) {
+        displayError("The Tracker Network failed to retrieve the data.");
+      }
+
+      matches = data.data.matches;
+    } else if(context.remainingMatches) {
+      matches = context.remainingMatches
+    } else {
+      displayError();
     }
 
     dayData = context.data[context.data.length - 1];
-    matches = data.data.matches;
     i = 0;
     matchEnd = null
     for(; i < matches.length; i++) {
@@ -493,6 +502,7 @@ window.onload = function() {
       matchEnd = new Date(
         new Date(matchData.metadata.timestamp).getTime() + matchData.metadata.duration.value
       )
+      if(matchEnd > context.end) continue;
       if(matchEnd < context.start) break;
 
       if(matchData.segments[0].metadata.hasWon) {
@@ -508,9 +518,10 @@ window.onload = function() {
       dayData.timePlayed += stats.timePlayed.value;
     }
 
-    next = new Date(data.data.metadata.next);
+    next = new Date(matchEnd.getTime() - 1);
     if(i === matches.length && next > context.start) {
-      context.end = next;
+      if(next < context.end) context.end = next;
+      context.remainingMatches = null;
       return getDataHelper(context);
     } else {
       if(!sameDay(today, context.start)) {
@@ -524,6 +535,8 @@ window.onload = function() {
 
         window.localStorage.setItem(playerKey, JSON.stringify(playerStorage));
       }
+
+      context.remainingMatches = matches.slice(i, matches.length);
 
       matchEnd.setMilliseconds(matchEnd.getMilliseconds() + 1);
       context.skipTo = matchEnd;
