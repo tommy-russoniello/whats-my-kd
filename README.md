@@ -10,5 +10,5 @@ Check it out: https://tommy-russoniello.github.io/whats-my-kd/
 ## View stats for any day
 <img alt="stats for a day" src="https://github.com/tommy-russoniello/whats-my-kd/blob/master/images/documentation/today.png" width="500">
 
-## View charts for stats over time for any date range
+## View stats over any date range
 <img alt="stats over time" src="https://github.com/tommy-russoniello/whats-my-kd/blob/master/images/documentation/history.png" width="500">
