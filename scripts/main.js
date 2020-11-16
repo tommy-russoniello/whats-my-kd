@@ -1,14 +1,22 @@
 const API_URL = 'https://api.tracker.gg/api'
 const CORS_PROXY_URL = 'https://whats-my-kd-cors-proxy.herokuapp.com'
-const FULL_STATS_URL_PREFIX = 'https://cod.tracker.gg/modern-warfare/profile'
-const MATCHES_PATH = 'v1/modern-warfare/matches'
-const PROFILE_PATH = 'v2/modern-warfare/standard/profile'
+const FULL_STATS_URL_PREFIXES = {
+  modernWarfare: 'https://cod.tracker.gg/modern-warfare/profile',
+  coldWar: 'https://cod.tracker.gg/cold-war/profile'
+}
+const GAMES = ['modernWarfare', 'coldWar']
+const MATCHES_PATHS = { modernWarfare: 'v1/modern-warfare/matches', coldWar: 'v1/cold-war/matches' }
+const PROFILE_PATHS = {
+  modernWarfare: 'v2/modern-warfare/standard/profile',
+  coldWar: 'v2/cold-war/standard/profile'
+}
 const RATIO_PRECISION = 4
 const VIEW_STATES = { search: 1, today: 2, history: 3 }
-const VERSION = '1'
+const VERSION = '2'
 
-var darkMode = false
 var chart
+var darkMode = false
+var game
 var viewState
 
 window.addEventListener('DOMContentLoaded', function () {
@@ -22,12 +30,22 @@ window.addEventListener('DOMContentLoaded', function () {
     window.localStorage.setItem('version', VERSION)
   }
 
-  preferences = JSON.parse(preferences)
-  if (!preferences) {
-    preferences = defaultPreferences()
+  preferences = JSON.parse(preferences) || {}
+  const missingPreferences =
+    Object.keys(defaultPreferences()).filter(x => !Object.keys(preferences).includes(x))
+  if (missingPreferences) {
+    for (var i = 0; i < missingPreferences.length; i++) {
+      preferences[missingPreferences[i]] = defaultPreferences()[missingPreferences[i]]
+    }
+
     window.localStorage.setItem('preferences', JSON.stringify(preferences))
   }
   if (preferences.darkMode) toggleDarkMode()
+  if (!GAMES.includes(preferences.game)) {
+    preferences.game = defaultPreferences().game
+    window.localStorage.setItem('preferences', JSON.stringify(preferences))
+  }
+  game = preferences.game
 })
 
 $(document).ready(function () {
@@ -80,7 +98,19 @@ $(document).ready(function () {
   var historyStart = new Date(today.getTime())
   var historyEnd = new Date(today.getTime())
 
-  historyStart.setDate(historyEnd.getDate() - 6)
+  const urlParams = new URLSearchParams(window.location.search)
+  if (urlParams.get('game')) {
+    setGame(urlParams.get('game'))
+    const preferences = JSON.parse(window.localStorage.getItem('preferences'))
+    preferences.game = game
+    window.localStorage.setItem('preferences', JSON.stringify(preferences))
+  } else {
+    setGame(game)
+  }
+
+  // TODO: Revert to normal on 11/20/20
+  const daysBack = game === 'coldWar' ? 6 - (20 - today.getDate()) : 6
+  historyStart.setDate(historyEnd.getDate() - daysBack)
   datepickerStart.set('highlight', historyStart)
   datepickerStart.set('max', historyEnd)
   datepickerEnd.set('min', historyStart)
@@ -90,7 +120,6 @@ $(document).ready(function () {
 
   resetStats()
 
-  const urlParams = new URLSearchParams(window.location.search)
   var player = urlParams.get('id')
   var playerKey
   var playerStorage
@@ -107,15 +136,6 @@ $(document).ready(function () {
     $('#load-percentage').html('')
     $('.loader').hide()
     $('.search').show()
-  }
-
-  function renderChart () {
-    chart.render('chart-container-history', undefined, function () {
-      const credit = $("g[class^='raphael-group-'][class$='-creditgroup'] text")
-      credit.attr('id', 'fusion-charts-credit')
-      credit.html('Powered by FusionCharts')
-      credit.show()
-    })
   }
 
   function CheckResponseErrorMessage (data, message) {
@@ -239,6 +259,10 @@ $(document).ready(function () {
     } else {
       $('#comment').html('')
     }
+  }
+
+  function fullStatsUrlPrefix () {
+    return FULL_STATS_URL_PREFIXES[game]
   }
 
   function generateChart (context) {
@@ -369,7 +393,7 @@ $(document).ready(function () {
   }
 
   function getDataForDay (context) {
-    if (playerStorage[numericDateString(context.start)]) {
+    if (playerStorage[game][numericDateString(context.start)]) {
       setDataFromStore(context)
     } else if (context.remainingMatches) {
       setData(null, context)
@@ -380,7 +404,7 @@ $(document).ready(function () {
 
   function getDataHelper (context) {
     $.getJSON(
-      `${CORS_PROXY_URL}/${API_URL}/${MATCHES_PATH}/${platform}/${encodedPlayer}?` +
+      `${CORS_PROXY_URL}/${API_URL}/${matchesPath()}/${platform}/${encodedPlayer}?` +
       `type=mp&next=${context.end.getTime()}`
     )
       .done(function (data) { setData(data, context) })
@@ -395,12 +419,20 @@ $(document).ready(function () {
       })
   }
 
+  function getOverallKD (data) {
+    if (game === 'modernWarfare') {
+      return data.data.segments[0].stats.kDRatio.value
+    } else if (game === 'coldWar') {
+      return data.data.segments[0].stats.kdRatio.value
+    }
+  }
+
   function inViewState (state) {
     return viewState === VIEW_STATES[state]
   }
 
-  function pluralityString (number, singularWord, pluralWord) {
-    return `${number} ${number === 1 ? singularWord : pluralWord}`
+  function matchesPath () {
+    return MATCHES_PATHS[game]
   }
 
   function newDayData (day) {
@@ -411,10 +443,14 @@ $(document).ready(function () {
     return player && platform
   }
 
+  function pluralityString (number, singularWord, pluralWord) {
+    return `${number} ${number === 1 ? singularWord : pluralWord}`
+  }
+
   function process () {
     $('#name-today').html(player)
     $('#name-history').html(player)
-    const fullStatsUrl = `${FULL_STATS_URL_PREFIX}/${platform}/${encodedPlayer}/mp`
+    const fullStatsUrl = `${fullStatsUrlPrefix()}/${platform}/${encodedPlayer}/mp`
     $('#name-today').attr('href', fullStatsUrl)
     $('#name-history').attr('href', fullStatsUrl)
     $('#avatar-anchor-today').attr('href', fullStatsUrl)
@@ -423,7 +459,7 @@ $(document).ready(function () {
     deaths = 0
 
     $.getJSON(
-      `${CORS_PROXY_URL}/${API_URL}/${PROFILE_PATH}/${platform}/${encodedPlayer}`
+      `${CORS_PROXY_URL}/${API_URL}/${profilePath()}/${platform}/${encodedPlayer}`
     )
       .done(function (data) {
         $('.search').hide()
@@ -438,10 +474,17 @@ $(document).ready(function () {
         $('#avatar-today').attr('src', avatarUrl)
         $('#avatar-history').attr('src', avatarUrl)
 
-        overallKD = data.data.segments[0].stats.kDRatio.value
+        overallKD = getOverallKD(data)
 
         playerStorage = window.localStorage.getItem(playerKey)
-        playerStorage = playerStorage ? JSON.parse(playerStorage) : {}
+        if (playerStorage) {
+          playerStorage = JSON.parse(playerStorage)
+        } else {
+          playerStorage = {}
+          for (var i = 0; i < GAMES.length; i++) {
+            playerStorage[GAMES[i]] = {}
+          }
+        }
 
         getData()
       })
@@ -451,7 +494,10 @@ $(document).ready(function () {
         } else if (CheckResponseErrorMessage(data, 'This profile is private.')) {
           displayError('Player profile is private.')
         } else {
-          displayError('Player not found: profile is private or name is incorrect.')
+          displayError(
+            'Player not found: profile is private, name is incorrect, ' +
+            'or player has not yet played this game.'
+          )
         }
       })
   }
@@ -461,7 +507,7 @@ $(document).ready(function () {
       const tempDate = new Date(context.start.getTime())
       tempDate.setDate(tempDate.getDate() - i)
       context.data.push(newDayData(tempDate))
-      playerStorage[numericDateString(tempDate)] =
+      playerStorage[game][numericDateString(tempDate)] =
         { wins: 0, losses: 0, kills: 0, deaths: 0, timePlayed: 0 }
     }
 
@@ -472,6 +518,19 @@ $(document).ready(function () {
     context.skipToStart = null
   }
 
+  function profilePath () {
+    return PROFILE_PATHS[game]
+  }
+
+  function renderChart () {
+    chart.render('chart-container-history', undefined, function () {
+      const credit = $("g[class^='raphael-group-'][class$='-creditgroup'] text")
+      credit.attr('id', 'fusion-charts-credit')
+      credit.html('Powered by FusionCharts')
+      credit.show()
+    })
+  }
+
   function resetStats () {
     wins = 0
     losses = 0
@@ -480,11 +539,30 @@ $(document).ready(function () {
     timePlayed = 0
   }
 
+  function selectGame (name) {
+    if (game === name) return
+
+    setGame(name)
+
+    if (playerSelected()) {
+      const searchParams = new URLSearchParams()
+      searchParams.set('id', player)
+      searchParams.set('platform', platform)
+      searchParams.set('game', game)
+      window.location.search = searchParams.toString()
+    }
+  }
+
   function setData (data, context) {
     var matches
     if (data) {
       if (!('data' in data) || !('matches' in data.data)) {
-        displayError('The Tracker Network failed to retrieve the data.')
+        displayError(
+          'The Tracker Network failed to retrieve the data.<br>' +
+          'This may be because you selected a range that starts before the player\'s ' +
+            'first ever match in this game.<br>' +
+          'The Tracker Network is dumb and will give an error if you do this :('
+        )
       }
 
       matches = data.data.matches
@@ -525,7 +603,7 @@ $(document).ready(function () {
       return getDataHelper(context)
     } else {
       if (!sameDay(today, context.start)) {
-        playerStorage[numericDateString(context.start)] = {
+        playerStorage[game][numericDateString(context.start)] = {
           wins: dayData.wins,
           losses: dayData.losses,
           kills: dayData.kills,
@@ -553,7 +631,7 @@ $(document).ready(function () {
   }
 
   function setDataFromStore (context) {
-    const data = playerStorage[numericDateString(context.start)]
+    const data = playerStorage[game][numericDateString(context.start)]
     const dayData = context.data[context.data.length - 1]
 
     dayData.wins = data.wins
@@ -567,6 +645,13 @@ $(document).ready(function () {
 
   function setDate () {
     $('#date-today').html(prettyDateString(start))
+  }
+
+  function setGame (name) {
+    if (!GAMES.includes(name)) name = window.defaultPreferences().game
+    game = name
+    $('.game-menu-icon-toggle').hide()
+    $(`.${camelCaseToKebabCase(game)}-icon-toggle`).show()
   }
 
   function setHistoryDates () {
@@ -607,7 +692,22 @@ $(document).ready(function () {
     }
 
     searchParams.set('platform', tempPlatform)
+    searchParams.set('game', game)
     window.location.search = searchParams.toString()
+  })
+
+  $('#open-game-menu').change(function () {
+    if (this.checked) $('#open-sidebar-menu').prop('checked', false)
+  })
+  $('#open-sidebar-menu').change(function () {
+    if (this.checked) $('#open-game-menu').prop('checked', false)
+  })
+
+  $('#select-modern-warfare').click(function () {
+    selectGame('modernWarfare')
+  })
+  $('#select-cold-war').click(function () {
+    selectGame('coldWar')
   })
 
   $('#toggle-dark-mode').click(function () {
@@ -733,9 +833,14 @@ $(document).ready(function () {
   })
 })
 
+function camelCaseToKebabCase (string) {
+  return string.replace(/[A-Z]/g, letter => `-${letter.toLowerCase()}`)
+}
+
 function defaultPreferences () {
   return {
-    darkMode: false
+    darkMode: false,
+    game: 'coldWar'
   }
 }
 

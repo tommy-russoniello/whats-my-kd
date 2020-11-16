@@ -39,14 +39,14 @@
         <div id="header">
           <p id="banner"><a class="plain-anchor unselectable" href="index.html">What's my KD today?</a></p>
         </div>
-        <input type="checkbox" class="openSidebarMenu" id="openSidebarMenu">
-        <label for="openSidebarMenu" class="sidebarIconToggle">
+        <input type="checkbox" id="open-sidebar-menu">
+        <label for="open-sidebar-menu" class="sidebar-icon-toggle">
           <div class="spinner diagonal part-1"></div>
           <div class="spinner horizontal"></div>
           <div class="spinner diagonal part-2"></div>
         </label>
-        <div id="sidebarMenu">
-          <ul class="sidebarMenuInner">
+        <div id="sidebar-menu">
+          <ul class="sidebar-menu-inner">
             <li><a href="https://github.com/tommy-russoniello/whats-my-kd" target="_blank">Github Repo</a></li>
             <li>
               <p id="toggle-text-dark-mode">Dark Mode</p>
@@ -57,6 +57,23 @@
                 </label>
               </div>
             </li>
+          </ul>
+        </div>
+        <input type="checkbox" id="open-game-menu">
+        <label for="open-game-menu" class="modern-warfare-icon-toggle game-menu-icon-toggle">
+          <svg id="modern-warfare-icon" viewBox="0 0 6726 2100">
+            <path d="M2924.37.01L1841.78 1120.34 764.83.01H-.01V2100h669.25V809.94l1172.54 1202.79L3028.41 795.39v492.67l672-689.92V.01h-776.04zm3133.84 0v1299.76L4874.37 84.9 3700.41 1290.07V816.04l-672 689.88V2100h747.96l1098-1120.33L5961.17 2100H6726V.01h-667.79z"></path>
+          </svg>
+        </label>
+        <label for="open-game-menu" class="cold-war-icon-toggle game-menu-icon-toggle">
+          <svg id="cold-war-icon" viewBox="0 0 24 24">
+            <path d="M10.4 7.2h2.3c.5 1.5 1 3 1.5 4.7.5-1.1 2.3-4.8 2.5-5.2.9 1.7 1.7 3.4 2.5 5.2.5-1.6 1-3.2 1.5-4.7H23c-.4 1.1.5-1.4-3.3 10.1-.5-1-2.3-4.5-3-5.9-1 2-2.4 4.7-3 6-.2-.6.3 1-3.3-10.2zm0 7.6c-.6-.5-1.2-.9-1.8-1.3-1.3 1.8-3.3 1.5-4.3.6C3.1 13 2.9 11.2 4 10c.5-.6 1.2-1 2-1 1.1 0 2 .5 2.6 1.4.6-.5 1.2-.9 1.8-1.3-1.3-1.7-3-2.3-5.1-2.1-1.8.2-3.3 1.7-3.8 2.7-.6 1.3-.6 2.6-.4 3.5.6 2.1 2.4 3.5 4.8 3.7h.6c1.7-.1 3-.8 3.9-2.1z"></path>
+          </svg>
+        </label>
+        <div id="game-menu">
+          <ul class="game-menu-inner">
+            <li id="select-modern-warfare"><p>Modern Warfare</p></li>
+            <li id="select-cold-war"><p>Black Ops Cold War</p></li>
           </ul>
         </div>
       </div>

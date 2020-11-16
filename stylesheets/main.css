@@ -46,7 +46,7 @@ a.plain-anchor:visited {
   cursor: pointer;
 }
 
-.unselectable, .sidebarMenuInner p, .sidebarMenuInner a {
+.unselectable, .sidebar-menu-inner p, .sidebar-menu-inner a, .game-menu-inner p {
   -webkit-touch-callout: none;
   -webkit-user-select: none;
   -khtml-user-select: none;
@@ -116,7 +116,8 @@ a.plain-anchor:visited {
   width: auto;
 
   margin: 0;
-  margin-left: 35px;
+  margin-left: 40px;
+  margin-right: 90px;
   padding: 0;
   padding-bottom: 10px;
 
@@ -319,7 +320,7 @@ input:-webkit-autofill:active {
 }
 
 /* https://codepen.io/plavookac/pen/qomrMw */
-#sidebarMenu {
+#sidebar-menu {
   height: 100%;
   position: fixed;
   left: 0;
@@ -329,15 +330,25 @@ input:-webkit-autofill:active {
   background: #2c4d6b;
   z-index: 1;
 }
-.dark-mode #sidebarMenu {
+#game-menu {
+  height: 100%;
+  position: fixed;
+  right: 0;
+  width: 250px;
+  transform: translateX(250px);
+  transition: transform 250ms ease-in-out;
+  background: #2c4d6b;
+  z-index: 1;
+}
+.dark-mode #sidebar-menu, .dark-mode #game-menu {
   background: var(--dark-mode-color-alt);
 }
-.sidebarMenuInner {
+.sidebar-menu-inner, .game-menu-inner {
   margin: 0;
   padding: 0;
   border-top: 1px solid rgba(255, 255, 255, 0.10);
 }
-.sidebarMenuInner li {
+.sidebar-menu-inner li, .game-menu-inner li {
   list-style: none;
   color: #fff;
   text-transform: uppercase;
@@ -345,28 +356,38 @@ input:-webkit-autofill:active {
   padding: 15px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.10);
 }
-.sidebarMenuInner li span {
+.sidebar-menu-inner li span, .game-menu-inner li span {
   display: block;
   font-size: 14px;
   color: rgba(255, 255, 255, 0.50);
 }
-.sidebarMenuInner li a {
+.sidebar-menu-inner li a, .game-menu-inner li a {
   color: #fff;
   text-transform: uppercase;
   font-weight: bold;
   cursor: pointer;
   text-decoration: none;
 }
-input[type="checkbox"]:checked ~ #sidebarMenu {
+#open-sidebar-menu:checked ~ #sidebar-menu {
   transform: translateX(0);
 }
-
-input[type=checkbox] {
-  transition: all 0.3s;
-  box-sizing: border-box;
+#open-game-menu:checked ~ #game-menu {
+  transform: translateX(0);
+}
+#open-game-menu:checked ~ .modern-warfare-icon-toggle {
+  fill: #789920;
+}
+#open-game-menu:checked ~ .cold-war-icon-toggle {
+  fill: #d04242;
+}
+#open-sidebar-menu, #open-game-menu {
   display: none;
 }
-.sidebarIconToggle {
+#open-sidebar-menu {
+  transition: all 0.3s;
+  box-sizing: border-box;
+}
+.sidebar-icon-toggle, .game-menu-icon-toggle {
   margin-top: 10px;
   transition: all 0.3s;
   box-sizing: border-box;
@@ -375,10 +396,30 @@ input[type=checkbox] {
   z-index: 99;
   height: 100%;
   width: 100%;
-  top: 22px;
-  left: 15px;
   height: 22px;
   width: 22px;
+}
+.sidebar-icon-toggle {
+  top: 22px;
+  left: 15px;
+}
+.game-menu-icon-toggle {
+  fill: #ffffff;
+  display: none;
+}
+.modern-warfare-icon-toggle {
+  top: 18px;
+  right: 70px;
+}
+.cold-war-icon-toggle {
+  top: -4px;
+  right: 60px;
+}
+#modern-warfare-icon {
+  height: 25px;
+}
+#cold-war-icon {
+  height: 70px;
 }
 .spinner {
   transition: all 0.3s;
@@ -408,25 +449,25 @@ input[type=checkbox] {
   float: left;
   margin-top: 3px;
 }
-input[type=checkbox]:checked ~ .sidebarIconToggle > .horizontal {
+#open-sidebar-menu:checked ~ .sidebar-icon-toggle > .horizontal {
   transition: all 0.3s;
   box-sizing: border-box;
   opacity: 0;
 }
-input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-1 {
+#open-sidebar-menu:checked ~ .sidebar-icon-toggle > .diagonal.part-1 {
   transition: all 0.3s;
   box-sizing: border-box;
   transform: rotate(135deg);
   margin-top: 8px;
 }
-input[type=checkbox]:checked ~ .sidebarIconToggle > .diagonal.part-2 {
+#open-sidebar-menu:checked ~ .sidebar-icon-toggle > .diagonal.part-2 {
   transition: all 0.3s;
   box-sizing: border-box;
   transform: rotate(-135deg);
   margin-top: -9px;
 }
 
-.sidebarMenuInner p {
+.sidebar-menu-inner p, .game-menu-inner p {
   margin: 0;
   display: inline-block;
 }
@@ -570,17 +611,33 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
 
 @media screen and (max-width: 1000px), screen and (max-height: 350px) {
   #banner {
+    margin-right: 72px;
     padding-top: 15px;
     font-size: 25pt;
+  }
+
+  .sidebar-icon-toggle, .game-menu-icon-toggle {
+    margin-top: 0;
+  }
+
+  .modern-warfare-icon-toggle {
+    top: 24px;
+    right: 56px;
+  }
+  .cold-war-icon-toggle {
+    top: 7px;
+    right: 48px;
+  }
+  #modern-warfare-icon {
+    height: 20px;
+  }
+  #cold-war-icon {
+    height: 56px;
   }
 
   #username {
     height: 50px;
     font-size: 20pt;
-  }
-
-  .sidebarIconToggle {
-    margin-top: 0;
   }
 
   #date-today,
@@ -607,6 +664,26 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
 }
 
 @media screen and (max-width: 500px) {
+  #banner {
+    margin-right: 54px;
+    font-size: 20pt;
+  }
+
+  .modern-warfare-icon-toggle {
+    top: 25px;
+    right: 42px;
+  }
+  .cold-war-icon-toggle {
+    top: 10px;
+    right: 36px;
+  }
+  #modern-warfare-icon {
+    height: 15px;
+  }
+  #cold-war-icon {
+    height: 42px;
+  }
+
   #username {
     height: 30px;
     font-size: 20pt;
@@ -629,7 +706,22 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
 @media screen and (max-width: 350px), screen and (max-height: 350px) {
   #banner {
     padding-top: 15px;
-    font-size: 20pt;
+    font-size: 15pt;
+  }
+
+  .modern-warfare-icon-toggle {
+    top: 18px;
+    right: 20px;
+  }
+  .cold-war-icon-toggle {
+    top: 14px;
+    right: 17px;
+  }
+  #modern-warfare-icon {
+    height: 10px;
+  }
+  #cold-war-icon {
+    height: 28px;
   }
 
   #username {
@@ -660,7 +752,7 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
     padding-bottom: 15px;
     font-size: 10pt;
   }
-  .sidebarIconToggle {
+  .sidebar-icon-toggle, .game-menu-icon-toggle {
     margin-top: -5px;
   }
   #username {
