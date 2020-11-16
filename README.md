@@ -1,6 +1,10 @@
 # What's my KD?
 
-Let's you see what your Kill:Death Ratio and other stats are for _Call of Duty: Modern Warfare (2019)_ so far today as well as how they have changed over time.
+Let's you see what your Kill:Death Ratio and other stats are for _Call of Duty_ so far today as well as how they have changed over time.
+
+Games supported:
+- _Black Ops Cold War_
+- _Modern Warfare_ (2019)
 
 Check it out: https://tommy-russoniello.github.io/whats-my-kd/
 
