@@ -666,6 +666,22 @@ $(document).ready(function () {
     viewState = VIEW_STATES[state]
   }
 
+  $(document).click(function (event) {
+    if (
+      $('#open-sidebar-menu').prop('checked') &&
+      !$('#sidebar-container').find(event.target).length
+    ) {
+      $('#open-sidebar-menu').prop('checked', false)
+    }
+
+    if (
+      $('#open-game-menu').prop('checked') &&
+      !$('#game-menu-container').find(event.target).length
+    ) {
+      $('#open-game-menu').prop('checked', false)
+    }
+  })
+
   $('#username').on('keyup', function () {
     if (event.key !== 'Enter') return
 
@@ -673,7 +689,7 @@ $(document).ready(function () {
     event.preventDefault()
   })
 
-  $(document).on('click', '#search', function () {
+  $('#search').click(function () {
     $('#error').hide()
     $('.search').hide()
     $('.loader').show()
@@ -696,18 +712,20 @@ $(document).ready(function () {
     window.location.search = searchParams.toString()
   })
 
+  $('#open-sidebar-menu').change(function (event) {
+    if (this.checked) $('#open-game-menu').prop('checked', false)
+  })
   $('#open-game-menu').change(function () {
     if (this.checked) $('#open-sidebar-menu').prop('checked', false)
-  })
-  $('#open-sidebar-menu').change(function () {
-    if (this.checked) $('#open-game-menu').prop('checked', false)
   })
 
   $('#select-modern-warfare').click(function () {
     selectGame('modernWarfare')
+    $('#open-game-menu').prop('checked', false)
   })
   $('#select-cold-war').click(function () {
     selectGame('coldWar')
+    $('#open-game-menu').prop('checked', false)
   })
 
   $('#toggle-dark-mode').click(function () {

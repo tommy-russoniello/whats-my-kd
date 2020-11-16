@@ -421,6 +421,9 @@ input:-webkit-autofill:active {
 #cold-war-icon {
   height: 70px;
 }
+.game-menu-inner li {
+  cursor: pointer;
+}
 .spinner {
   transition: all 0.3s;
   box-sizing: border-box;
