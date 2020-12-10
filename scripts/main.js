@@ -108,9 +108,7 @@ $(document).ready(function () {
     setGame(game)
   }
 
-  // TODO: Revert to normal on 11/20/20
-  const daysBack = game === 'coldWar' ? 6 - (20 - today.getDate()) : 6
-  historyStart.setDate(historyEnd.getDate() - daysBack)
+  historyStart.setDate(historyEnd.getDate() - 6)
   datepickerStart.set('highlight', historyStart)
   datepickerStart.set('max', historyEnd)
   datepickerEnd.set('min', historyStart)
