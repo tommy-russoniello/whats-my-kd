@@ -222,6 +222,11 @@ $(document).ready(function () {
     const deathsString = pluralityString(deaths, 'death', 'deaths')
     $('#kd').html(`${killsString} / ${deathsString} = ${kdRatio} KD`)
 
+    upArrowClass = 'fa-long-arrow-alt-up'
+    downArrowClass = 'fa-long-arrow-alt-down'
+    $('#kd-diff').removeClass(`${upArrowClass} ${downArrowClass}`)
+    $('#wl-diff').removeClass(`${upArrowClass} ${downArrowClass}`)
+
     const wlRatio = (wins / (losses || 1)).toPrecision(RATIO_PRECISION)
     const winsString = pluralityString(wins, 'win', 'wins')
     const lossesString = pluralityString(losses, 'loss', 'losses')
@@ -236,7 +241,21 @@ $(document).ready(function () {
     const secondsString = pluralityString(seconds, 'second', 'seconds')
     $('#time-played').html(`${hoursString}, ${minutesString}, and ${secondsString} played`)
 
+    if (losses > 0 || wins > 0) {
+      if (wlRatio > overallWL) {
+        $('#wl-diff').addClass(upArrowClass)
+      } else if (wlRatio < overallWL) {
+        $('#wl-diff').addClass(downArrowClass)
+      }
+    }
+
     if (deaths > 0 || kills > 0) {
+      if (kdRatio > overallKD) {
+        $('#kd-diff').addClass(upArrowClass)
+      } else if (kdRatio < overallKD) {
+        $('#kd-diff').addClass(downArrowClass)
+      }
+
       if (kdRatio < 0.5) {
         $('#comment').html('You kinda suck today, bruh.')
       } else if (kdRatio < 0.8) {
@@ -418,11 +437,13 @@ $(document).ready(function () {
   }
 
   function getOverallKD (data) {
-    if (game === 'modernWarfare') {
-      return data.data.segments[0].stats.kDRatio.value
-    } else if (game === 'coldWar') {
-      return data.data.segments[0].stats.kdRatio.value
-    }
+    const stats = data.data.segments[0].stats
+    return (stats.kills.value / (stats.deaths.value || 1)).toPrecision(RATIO_PRECISION)
+  }
+
+  function getOverallWL (data) {
+    const stats = data.data.segments[0].stats
+    return (stats.wins.value / (stats.losses.value || 1)).toPrecision(RATIO_PRECISION)
   }
 
   function inViewState (state) {
@@ -473,6 +494,7 @@ $(document).ready(function () {
         $('#avatar-history').attr('src', avatarUrl)
 
         overallKD = getOverallKD(data)
+        overallWL = getOverallWL(data)
 
         playerStorage = window.localStorage.getItem(playerKey)
         if (playerStorage) {

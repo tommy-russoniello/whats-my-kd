@@ -208,11 +208,23 @@ a.plain-anchor:visited {
 #kd {
   font-size: 25pt;
 }
+#kd-diff {
+  font-size: 15pt;
+}
 #wl, #time-played {
   font-size: 18pt;
 }
+#wl-diff {
+  font-size: 11pt;
+}
 #comment {
   font-size: 15pt;
+}
+.fa-long-arrow-alt-down {
+  color: red
+}
+.fa-long-arrow-alt-up {
+  color: green
 }
 
 input:-webkit-autofill,
@@ -658,8 +670,14 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
   #kd {
     font-size: 17pt;
   }
+  #kd-diff {
+    font-size: 10pt;
+  }
   #wl, #time-played {
     font-size: 12pt;
+  }
+  #wl-diff {
+    font-size: 8pt;
   }
   #comment {
     font-size: 12pt;
