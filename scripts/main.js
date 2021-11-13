@@ -12,7 +12,7 @@ const PROFILE_PATHS = {
 }
 const RATIO_PRECISION = 4
 const VIEW_STATES = { search: 1, today: 2, history: 3 }
-const VERSION = '2'
+const VERSION = '3'
 
 var chart
 var darkMode = false
@@ -218,7 +218,8 @@ $(document).ready(function () {
     $('#show-today, #show-history').addClass('bottom-nav-selectable')
 
     const kdRatio = (kills / (deaths || 1)).toPrecision(RATIO_PRECISION)
-    const killsString = pluralityString(kills, 'kill', 'kills')
+    const killWord = game == 'modernWarfare' ? 'kill' : 'elim'
+    const killsString = pluralityString(kills, killWord, `${killWord}s`)
     const deathsString = pluralityString(deaths, 'death', 'deaths')
     $('#kd').html(`${killsString} / ${deathsString} = ${kdRatio} KD`)
 
@@ -436,9 +437,13 @@ $(document).ready(function () {
       })
   }
 
+  function getKillStat (stats) {
+    return game == 'modernWarfare' ? stats.kills : stats.ekia
+  }
+
   function getOverallKD (data) {
     const stats = data.data.segments[0].stats
-    return (stats.kills.value / (stats.deaths.value || 1)).toPrecision(RATIO_PRECISION)
+    return (getKillStat(stats).value / (stats.deaths.value || 1)).toPrecision(RATIO_PRECISION)
   }
 
   function getOverallWL (data) {
@@ -610,7 +615,7 @@ $(document).ready(function () {
       }
 
       const stats = matchData.segments[0].stats
-      dayData.kills += stats.kills.value
+      dayData.kills += getKillStat(stats).value
       dayData.deaths += stats.deaths.value
 
       dayData.timePlayed += stats.timePlayed.value
