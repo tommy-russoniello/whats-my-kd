@@ -2,13 +2,19 @@ const API_URL = 'https://api.tracker.gg/api'
 const CORS_PROXY_URL = 'https://whats-my-kd-cors-proxy.herokuapp.com'
 const FULL_STATS_URL_PREFIXES = {
   modernWarfare: 'https://cod.tracker.gg/modern-warfare/profile',
-  coldWar: 'https://cod.tracker.gg/cold-war/profile'
+  coldWar: 'https://cod.tracker.gg/cold-war/profile',
+  vanguard: 'https://cod.tracker.gg/vanguard/profile'
 }
-const GAMES = ['modernWarfare', 'coldWar']
-const MATCHES_PATHS = { modernWarfare: 'v1/modern-warfare/matches', coldWar: 'v1/cold-war/matches' }
+const GAMES = ['modernWarfare', 'coldWar', 'vanguard']
+const MATCHES_PATHS = {
+  modernWarfare: 'v1/modern-warfare/matches',
+  coldWar: 'v1/cold-war/matches',
+  vanguard: 'v1/vanguard/matches'
+}
 const PROFILE_PATHS = {
   modernWarfare: 'v2/modern-warfare/standard/profile',
-  coldWar: 'v2/cold-war/standard/profile'
+  coldWar: 'v2/cold-war/standard/profile',
+  vanguard: 'v2/vanguard/standard/profile'
 }
 const RATIO_PRECISION = 4
 const VIEW_STATES = { search: 1, today: 2, history: 3 }
@@ -438,7 +444,7 @@ $(document).ready(function () {
   }
 
   function getKillStat (stats) {
-    return game == 'modernWarfare' ? stats.kills : stats.ekia
+    return game == 'coldWar' ? stats.ekia : stats.kills
   }
 
   function getOverallKD (data) {
@@ -750,6 +756,10 @@ $(document).ready(function () {
   })
   $('#select-cold-war').click(function () {
     selectGame('coldWar')
+    $('#open-game-menu').prop('checked', false)
+  })
+  $('#select-vanguard').click(function () {
+    selectGame('vanguard')
     $('#open-game-menu').prop('checked', false)
   })
 

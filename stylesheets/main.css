@@ -392,6 +392,9 @@ input:-webkit-autofill:active {
 #open-game-menu:checked ~ .cold-war-icon-toggle {
   fill: #d04242;
 }
+#open-game-menu:checked ~ .vanguard-icon-toggle {
+  fill: #c2001a;
+}
 #open-sidebar-menu, #open-game-menu {
   display: none;
 }
@@ -427,11 +430,18 @@ input:-webkit-autofill:active {
   top: -4px;
   right: 60px;
 }
+.vanguard-icon-toggle {
+  top: 10px;
+  right: 42px;
+}
 #modern-warfare-icon {
   height: 25px;
 }
 #cold-war-icon {
   height: 70px;
+}
+#vanguard-icon {
+  height: 50px;
 }
 .game-menu-inner li {
   cursor: pointer;
@@ -643,11 +653,18 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
     top: 7px;
     right: 48px;
   }
+  .vanguard-icon-toggle {
+    top: 13px;
+    right: 32px;
+  }
   #modern-warfare-icon {
     height: 20px;
   }
   #cold-war-icon {
     height: 56px;
+  }
+  #vanguard-icon {
+    height: 40px;
   }
 
   #username {
@@ -698,11 +715,18 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
     top: 10px;
     right: 36px;
   }
+  .vanguard-icon-toggle {
+    top: 15px;
+    right: 25px;
+  }
   #modern-warfare-icon {
     height: 15px;
   }
   #cold-war-icon {
     height: 42px;
+  }
+  #vanguard-icon {
+    height: 30px;
   }
 
   #username {
@@ -738,11 +762,18 @@ g[class^='raphael-group-'][class$='-creditgroup'] text {
     top: 14px;
     right: 17px;
   }
+  .vanguard-icon-toggle {
+    top: 19px;
+    right: 13px;
+  }
   #modern-warfare-icon {
     height: 10px;
   }
   #cold-war-icon {
     height: 28px;
+  }
+  #vanguard-icon {
+    height: 20px;
   }
 
   #username {

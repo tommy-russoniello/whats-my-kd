@@ -3,6 +3,7 @@
 Let's you see what your Kill:Death Ratio and other stats are for _Call of Duty_ so far today as well as how they have changed over time.
 
 Games supported:
+- _Vanguard_
 - _Black Ops Cold War_
 - _Modern Warfare_ (2019)
 
